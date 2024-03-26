@@ -30,16 +30,22 @@ The State-level Consumer Price Index is a dataset sourced from the Bureau of Lab
 
 ## Setting Up
 
-Create a file named 'constants.js' with the content:
+Ensure you have node.js on version 14.6 at least:
 
 ```
-export const DB_CONFIG_USERNAME = "<YOUR USERNAME>";
-export const DB_CONFIG_PASSWORD = "<YOUR CISE PASSWORD>";
-export const DB_CONFIG_CONNECTION = "oracle.cise.ufl.edu:1521/orcl";
+node -v
+```
+
+Create a file named 'config.env' in the config directory with the content:
+
+```
+PORT = 3000
+DB_CONFIG_USERNAME = "<YOUR USERNAME>"
+DB_CONFIG_PASSWORD = "<YOUR CISE PASSWORD>"
+DB_CONFIG_CONNECTION = "oracle.cise.ufl.edu:1521/orcl"
 ```
 
 Get your db credentials from: https://register.cise.ufl.edu/oracle/
-
 
 1. To run it, open the directory and run:
 
@@ -56,3 +62,31 @@ docker-compose down
 3. Access the website at:
 
 http://localhost:3000/data
+
+4. When making changes, run:
+
+```
+docker-compose up --build
+```
+
+To install docker in a Debian/Ubuntu systems:
+
+
+1. Ensure that pip is installed on your system. 
+
+```
+sudo apt-get update
+sudo apt-get install python3-pip
+```
+
+2. Install Docker Compose:
+
+```
+pip install docker-compose
+``
+
+3. Verify the installation
+
+```
+docker-compose --version
+```
