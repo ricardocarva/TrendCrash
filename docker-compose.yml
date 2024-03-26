@@ -1,0 +1,10 @@
+version: '3'
+services:
+  my-node-app:
+    image: trendcrash
+    dns:
+      - "128.227.30.254"
+      - "8.6.245.30"
+    ports:
+      - "3000:3000"
+    container_name: trendcrash
