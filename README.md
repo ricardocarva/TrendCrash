@@ -30,7 +30,7 @@ The State-level Consumer Price Index is a dataset sourced from the Bureau of Lab
 
 ## Setting Up
 
-The constants.js should be:
+Create a file named 'constants.js' with the content:
 
 ```
 export const DB_CONFIG_USERNAME = "<YOUR USERNAME>";
