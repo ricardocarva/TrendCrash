@@ -47,9 +47,10 @@ Get your db credentials from: https://register.cise.ufl.edu/oracle/
 docker-compose up -d
 ```
 
-2 To stop it, run:
+2. To stop the container, run:
 
-```docker-compose down
+```
+docker-compose down
 ```
 
 3. Access the website at:
