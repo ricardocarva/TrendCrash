@@ -66,7 +66,7 @@ http://localhost:3000/data
 4. When making changes, run:
 
 ```
-docker-compose up --build
+docker-compose up --build -d
 ```
 
 To install docker in a Debian/Ubuntu systems:
@@ -83,7 +83,7 @@ sudo apt-get install python3-pip
 
 ```
 pip install docker-compose
-``
+```
 
 3. Verify the installation
 
