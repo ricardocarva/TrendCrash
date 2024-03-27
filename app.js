@@ -13,7 +13,8 @@ let connection = await setupOracleConnection();
 // may want to rework this to just leave the connection open so that we don't have overhead on the request
 app.get("/data", async (req, res) => {
     // raw query
-    const query = `SELECT * FROM RCARVALHEIRA.ACCIDENT`;
+    // const query = `SELECT * FROM RCARVALHEIRA.ACCIDENTMASTER ORDER BY id FETCH FIRST 10000 ROWS ONLY;`;
+    const query = `SELECT * FROM RCARVALHEIRA.ACCIDENTMASTER WHERE ROWNUM <= 10000`;
 
     try {
         const result = await connection.execute(query);
