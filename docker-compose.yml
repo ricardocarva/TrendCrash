@@ -1,0 +1,13 @@
+version: '3'
+services:
+  trendcrash:
+    build: .
+    image: trendcrash
+    dns:
+      - "128.227.30.254"
+      - "8.6.245.30"
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./config/config.env
+    container_name: trendcrash

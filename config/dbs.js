@@ -8,7 +8,7 @@ export const setupOracleConnection = async () => {
         connectString: process.env.DB_CONFIG_CONNECTION,
     };
 
-    let connection = {};
+    let connection = null;
 
     // try to connect to oracle
     try {

@@ -1,0 +1,101 @@
+* {
+    box-sizing: border-box;
+}
+
+#queryInput-1,
+#queryInput-2,
+#queryInput-3,
+#queryInput-4,
+#queryInput-5 {
+    font-family: monospace;
+}
+
+.flex {
+    display: flex;
+}
+
+.card {
+    width: 55%;
+    padding: 0;
+    margin: 1rem;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.25s, -webkit-box-shadow 0.25s;
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+.card form {
+    padding: 2rem;
+    width: 100%;
+}
+
+form {
+    position: sticky;
+    top: 0px;
+    background-color: white;
+}
+
+.card form input {
+    padding: 0.5rem;
+}
+
+.card form input,
+.btn {
+    width: 100%;
+}
+
+.card form .btn {
+    margin-top: 0.5rem;
+}
+
+.m-auto {
+    margin: auto;
+}
+
+.none {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+li a {
+    font-size: 1rem !important;
+    font-weight: 500;
+}
+
+.p-1 {
+    padding: 1rem;
+}
+.pl-1 {
+    padding-left: 1rem;
+}
+
+.response {
+    font-family: monospace;
+}
+
+.max-w-60 {
+    max-width: 60%;
+}
+
+.w-60 {
+    width: 60%;
+}
+
+.list-item {
+    font-family: monospace;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.list-item:hover {
+    background-color: rgb(232, 240, 254);
+}
