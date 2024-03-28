@@ -2,8 +2,8 @@
 
 -- Create Timezone entity table
 CREATE TABLE Timezone (
-    timezone_id VARCHAR2(5) PRIMARY KEY,
-    name VARCHAR2(32) 
+    timezone_id VARCHAR2(4) PRIMARY KEY,
+    name VARCHAR2(11) 
 );
 -- Create State entity table
 CREATE TABLE State (
@@ -17,10 +17,10 @@ CREATE TABLE State (
 CREATE TABLE Location (
     location_id INTEGER PRIMARY KEY,
     state_id VARCHAR2(2) ,
-    timezone_id VARCHAR2(64) ,
-    street VARCHAR2(128) ,
-    city VARCHAR2(128) ,
-    county VARCHAR2(128) ,
+    timezone_id VARCHAR2(3) ,
+    street VARCHAR2(59) ,
+    city VARCHAR2(32) ,
+    county VARCHAR2(30) ,
     zip VARCHAR2(10) ,
     FOREIGN KEY (state_id) REFERENCES State(state_id),
     FOREIGN KEY (timezone_id) REFERENCES Timezone(timezone_id)
@@ -46,16 +46,16 @@ CREATE TABLE TrafficDetails (
 -- Create AccidentWeather entity table
 CREATE TABLE AccidentWeather (
     accident_weather_id INTEGER PRIMARY KEY,
-    condition VARCHAR2(255) ,
+    condition VARCHAR2(28) ,
     accident_date DATE ,
     accident_time TIMESTAMP ,
     temperature DECIMAL(5,2) ,
     wind_chill DECIMAL(5,2) ,
     humidity DECIMAL(5,2) ,
     pressure DECIMAL(5,2) ,
-    visibility DECIMAL(5,2) ,
-    wind_speed DECIMAL(5,2) ,
-    precipitation DECIMAL(5,2)
+    visibility DECIMAL(4,2) ,
+    wind_speed DECIMAL(4,2) ,
+    precipitation DECIMAL(3,2)
 );
 
 -- Create Accident entity table
@@ -64,13 +64,13 @@ CREATE TABLE Accident (
     location_id INTEGER ,
     accident_weather_id INTEGER ,
     traffic_details_id INTEGER ,
-    severity INTEGER ,
+    severity INTEGER CHECK (severity BETWEEN 0 AND 999),
     accident_date DATE ,
     start_time TIMESTAMP ,
     end_time TIMESTAMP ,
-    time_of_day VARCHAR2(64) ,
-    distance DECIMAL(10,2) ,
-    description VARCHAR2(255) ,
+    time_of_day VARCHAR2(9) ,
+    distance DECIMAL(18,2) ,
+    description VARCHAR2(147) ,
     FOREIGN KEY (location_id) REFERENCES Location(location_id),
     FOREIGN KEY (accident_weather_id) REFERENCES AccidentWeather(accident_weather_id),
     FOREIGN KEY (traffic_details_id) REFERENCES TrafficDetails(traffic_details_id)

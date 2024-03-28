@@ -14,7 +14,7 @@ let connection = await setupOracleConnection();
 app.get("/data", async (req, res) => {
     // raw query
     // const query = `SELECT * FROM RCARVALHEIRA.ACCIDENTMASTER ORDER BY id FETCH FIRST 10000 ROWS ONLY;`;
-    const query = `SELECT COUNT(*) FROM RCARVALHEIRA.KAGGLE WHERE ROWNUM <= 10000`;
+    const query = `SELECT COUNT(*) FROM RCARVALHEIRA.KAGGLE`;
 
     try {
         const result = await connection.execute(query);
