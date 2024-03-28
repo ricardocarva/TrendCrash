@@ -1,4 +1,5 @@
 import { setupOracleConnection } from "./config/dbs.js";
+import { safeGuardQuery } from "./public/scripts/utils.js";
 import express from "express";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
@@ -42,30 +43,43 @@ app.post("/data", async (req, res) => {
     const cityQuery = "select * from city where rownum <= 10000";
     // const query = `${selectFrom} ${tableName} ${whereClause}`;
 
-    // strip off semicolon
-    const query = req.body.data.replace(/;/g, "");
-    console.log(query);
+    // validates and returns the santized sql query and it
+    const query = safeGuardQuery(req.body.data);
+    if (query) {
+        try {
+            const start = Date.now();
+            const result = await connection.execute(query);
+            const end = Date.now();
+            const numTuples = result.rows.length;
+            const resObj = {
+                message: "success",
+                query,
+                result: result.rows,
+                execution_time: `${numTuples} tuples returned in ${
+                    end - start
+                }ms`,
+            };
 
-    try {
-        const start = Date.now();
-        const result = await connection.execute(query);
-        const end = Date.now();
-        const numTuples = result.rows.length;
+            console.log("\nresult found", resObj);
+
+            // send response
+            res.json(resObj);
+        } catch (err) {
+            console.log(err);
+            res.status(500).send(
+                "Error executing query, confirm table exists and check query format."
+            );
+        }
+    } else {
+        console.log("query doesn't pass validity check");
         const resObj = {
+            message:
+                "Query doesn't pass validity check, please don't try to alter tables",
             query,
-            result: result.rows,
-            execution_time: `${numTuples} tuples returned in ${end - start}ms`,
+            result: [],
+            execution_time: 0,
         };
-
-        console.log("\nresult found", resObj);
-
-        // send response
         res.json(resObj);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send(
-            "Error executing query, confirm table exists and check query format."
-        );
     }
 });
 
