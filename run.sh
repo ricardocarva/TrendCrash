@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Starting docker-compose..."
-docker-compose up -d
+docker-compose up -d --build
 echo "Waiting for 2 seconds..."
 sleep 2
 echo "Opening browser..."
