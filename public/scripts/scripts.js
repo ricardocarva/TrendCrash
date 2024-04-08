@@ -107,3 +107,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // start the user on the input form so they can type right away
     document.getElementById("queryInput-1").focus();
 });
+
+
