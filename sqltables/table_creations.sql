@@ -133,3 +133,17 @@ CREATE TABLE COVIDTripsByDistance (
     PRIMARY KEY (state_id, year, month),
     FOREIGN KEY (state_id) REFERENCES State(state_id)
 );
+
+
+
+CREATE TABLE LocationDetails (
+    location_id VARCHAR2(9 BYTE) PRIMARY KEY,
+    state_id VARCHAR2(2),
+    timezone_id VARCHAR2(3),
+    street VARCHAR2(59),
+    city VARCHAR2(32),
+    county VARCHAR2(30),
+    zip VARCHAR2(10),
+    FOREIGN KEY (state_id) REFERENCES MSTRENGES.state(state_id),
+    FOREIGN KEY (timezone_id) REFERENCES Timezone(timezone_id)
+)COMPRESS FOR OLTP;
