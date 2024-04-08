@@ -1,4 +1,5 @@
 import { showLoader, hideLoader } from "./utils.js";
+import { getQuery1 } from "./queries.js";
 
 // submits a query, takes an element
 const querySubmitHandler = async (element) => {
@@ -67,8 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize Materialize tabs
     var tabs = document.querySelector(".tabs");
     var instance = M.Tabs.init(tabs);
+    var elems = document.querySelectorAll("select");
+    var instances = M.FormSelect.init(elems);
 
     // add event listeners to query form submit event for each form we have
+    document.getElementById("queryInput-1").value = getQuery1("FL");
     document.getElementById("dataForm-1").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
@@ -92,6 +96,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("dataForm-5").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
+    });
+
+    document.getElementById("states").addEventListener("change", (e) => {
+        document.getElementById("queryInput-1").value = getQuery1(
+            e.target.value
+        );
     });
 
     // start the user on the input form so they can type right away
