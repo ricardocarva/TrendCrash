@@ -40,7 +40,46 @@ ORDER BY
 FETCH FIRST 50 ROWS ONLY;
 
 /* Query 2: Relationship between Covid-19 lockdowns and traffic accidents */
-
+SELECT 
+    s.name,
+    a.accident_date,
+    c.number_of_trips,
+    ROUND(c.population_staying_at_home / (c.population_staying_at_home + c.population_not_staying_at_home) * 100,2) AS perc_pop_at_home,
+    COUNT(*) AS accident_count,
+    (beforeLockdown.number_of_trips - c.number_of_trips) AS trips_diff_to_2019
+FROM 
+    MSTRENGES.COVIDTRIPSBYDISTANCE c
+    JOIN
+    RCARVALHEIRA.LocationDetails l ON l.state_id = c.state_id
+    JOIN
+    "THOMAS.MARTIN".Accident a ON a.location_id = l.location_id
+    JOIN 
+    MSTRENGES.STATE s ON s.state_id = l.state_id
+    JOIN
+    (SELECT 
+        state_id, 
+        year, 
+        month, 
+        day,
+        number_of_trips
+    FROM MSTRENGES.COVIDTRIPSBYDISTANCE
+    WHERE year = 2019) beforeLockdown ON beforeLockdown.state_id = l.state_id
+WHERE
+    EXTRACT(YEAR FROM a.accident_date) = c.year AND 
+    EXTRACT(MONTH FROM a.accident_date) = c.month AND
+    EXTRACT(DAY FROM a.accident_date) = c.day AND
+    c.day = beforeLockdown.day AND
+    c.month = beforeLockdown.month AND
+    a.accident_date between ('12-MAR-20')AND ('31-AUG-20')
+GROUP BY
+    s.name, 
+    a.accident_date,
+    c.number_of_trips,
+    c.population_staying_at_home / (c.population_staying_at_home + c.population_not_staying_at_home),
+    (beforeLockdown.number_of_trips - c.number_of_trips)
+ORDER BY
+    s.name ASC,
+    a.accident_date ASC;
 
 /* Query 3: Relationship between unemployment rates and accident rates */
 SELECT 
