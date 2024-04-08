@@ -1,5 +1,6 @@
 import { setupOracleConnection } from "./config/dbs.js";
 import { safeGuardQuery } from "./public/scripts/utils.js";
+import { getQuery1 } from "./scripts/queries.js";
 import express from "express";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
@@ -41,10 +42,10 @@ app.post("/data", async (req, res) => {
     const tableName = "RCARVALHEIRA.STATES";
     const whereClause = "WHERE ROWNUM <= 1000";
     const cityQuery = "select * from city where rownum <= 10000";
-    // const query = `${selectFrom} ${tableName} ${whereClause}`;
 
     // validates and returns the santized sql query and it
     const query = safeGuardQuery(req.body.data);
+    console.log(query, "====");
     if (query) {
         try {
             const start = Date.now();
@@ -86,6 +87,6 @@ app.post("/data", async (req, res) => {
 const port = process.env.PORT;
 app.listen(port, () => {
     console.log(
-        `Server running on port ${port}\nVisit localhost:3000/data in a browser.`
+        `Server running on port ${port}\nVisit localhost:3000 in a browser.`
     );
 });

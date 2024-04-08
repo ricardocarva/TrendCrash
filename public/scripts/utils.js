@@ -47,17 +47,18 @@ export const noIllegalCommands = (query = "") => {
 };
 
 export const safeGuardQuery = (query = "") => {
-    if (query) {
+    let copy = query;
+    if (copy) {
         // lower case to make disallowing words easier
-        query = query.toLowerCase();
+        copy = copy.toLowerCase();
 
         // remove any ;
-        query = query.replace(/;/g, "");
+        copy = copy.replace(/;/g, "");
 
         if (
-            query.includes("drop") ||
-            query.includes("delete") ||
-            query.includes("alter")
+            copy.includes("drop") ||
+            copy.includes("delete") ||
+            copy.includes("alter")
         ) {
             query = null;
         }

@@ -15,7 +15,7 @@
 }
 
 .card {
-    width: 55%;
+    width: 65%;
     padding: 0;
     margin: 1rem;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
@@ -98,4 +98,17 @@ li a {
 
 .list-item:hover {
     background-color: rgb(232, 240, 254);
+}
+
+#queryInput-1 {
+    height: 500px;
+}
+
+.select-wrapper {
+    width: 25%;
+}
+
+.select-dropdown {
+    height: 300px;
+    top: 0px;
 }
