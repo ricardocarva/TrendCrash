@@ -26,3 +26,42 @@ ORDER BY
     u.month_no ASC
 `;
 };
+
+export const highlightKeywords = (query) => {
+    const keywords = [
+        "SELECT",
+        "JOIN",
+        "ON",
+        "WHERE",
+        "GROUP BY",
+        "ORDER BY",
+        "FETCH",
+        "FIRST",
+        "EXISTS",
+        "BETWEEN",
+        "EXTRACT",
+        "AND",
+        "OR",
+        "FROM",
+    ];
+
+    // escape keywords for use in a regular expression, split, wrap in word boundary, then join
+    const escapedKeywords = keywords.map((keyword) =>
+        keyword
+            .split(" ")
+            .map((word) => `\\b${word}\\b`)
+            .join("\\s+")
+    );
+
+    // regex to match all keywords
+    const keywordsRegex = new RegExp(`(${escapedKeywords.join("|")})`, "gi");
+
+    if (query) {
+        // replace keywords with the span-wrapped version
+        query = query.replace(keywordsRegex, (match) => {
+            return `<span class="keyword">${match.toUpperCase()}</span>`;
+        });
+    }
+
+    return query;
+};

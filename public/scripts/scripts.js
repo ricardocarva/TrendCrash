@@ -1,5 +1,5 @@
 import { showLoader, hideLoader } from "./utils.js";
-import { getQuery1 } from "./queries.js";
+import { getQuery1, highlightKeywords } from "./queries.js";
 
 // submits a query, takes an element
 const querySubmitHandler = async (element) => {
@@ -9,19 +9,15 @@ const querySubmitHandler = async (element) => {
     const timeDiv = document.getElementById(`time-${queryNumber}`);
 
     // clear previous time and results
-    timeDiv.innerText = "";
+    timeDiv.innerText = "Results: ";
     while (ul.firstChild) {
         ul.removeChild(ul.firstChild);
     }
+
     // display loading element
     showLoader(`queryLoader-${queryNumber}`);
 
-    // get the data from the form
-    const inputData = document.getElementById(
-        `queryInput-${queryNumber}`
-    ).value;
-
-    console.log("input data", inputData);
+    console.log("input data", queries[queryNumber].queryString);
 
     try {
         // post to backend
@@ -30,7 +26,7 @@ const querySubmitHandler = async (element) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ data: inputData }),
+            body: JSON.stringify({ data: queries[queryNumber].queryString }),
         });
 
         // error on bad response
@@ -63,6 +59,29 @@ const querySubmitHandler = async (element) => {
     }
 };
 
+// store the queries and their html string variant
+const queries = {
+    1: {
+        queryString: "",
+        queryHTML: "",
+    },
+    2: {
+        queryString: "",
+        queryHTML: "",
+    },
+    3: {
+        queryString: "",
+        queryHTML: "",
+    },
+    4: {
+        queryString: "",
+        queryHTML: "",
+    },
+    5: {
+        queryString: "",
+        queryHTML: "",
+    },
+};
 // dom is ready
 document.addEventListener("DOMContentLoaded", () => {
     // Initialize Materialize tabs
@@ -70,9 +89,16 @@ document.addEventListener("DOMContentLoaded", () => {
     var instance = M.Tabs.init(tabs);
     var elems = document.querySelectorAll("select");
     var instances = M.FormSelect.init(elems);
+    var elems = document.querySelectorAll(".modal");
+    var minstances = M.Modal.init(elems);
+    var elems = document.querySelectorAll(".collapsible");
+    var cinstances = M.Collapsible.init(elems);
+
+    queries[1].queryString = getQuery1("FL");
+    queries[1].queryHTML = highlightKeywords(queries[1].queryString);
 
     // add event listeners to query form submit event for each form we have
-    document.getElementById("queryInput-1").value = getQuery1("FL");
+    document.getElementById("queryInput-1").innerHTML = queries[1].queryHTML;
     document.getElementById("dataForm-1").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
@@ -99,9 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("states").addEventListener("change", (e) => {
-        document.getElementById("queryInput-1").value = getQuery1(
-            e.target.value
-        );
+        queries[1].queryString = getQuery1(e.target.value);
+        queries[1].queryHTML = highlightKeywords(queries[1].queryString);
+        document.getElementById("queryInput-1").innerHTML =
+            queries[1].queryHTML;
     });
 
     // start the user on the input form so they can type right away

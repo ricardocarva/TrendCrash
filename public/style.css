@@ -26,7 +26,6 @@
 }
 
 .card form {
-    padding: 2rem;
     width: 100%;
 }
 
@@ -46,7 +45,9 @@ form {
 }
 
 .card form .btn {
-    margin-top: 0.5rem;
+    margin-top: 0;
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
 }
 
 .m-auto {
@@ -88,12 +89,14 @@ li a {
 .w-60 {
     width: 60%;
 }
-
+.w-100 {
+    width: 100%;
+}
 .list-item {
     font-family: monospace;
     font-weight: 500;
     padding: 0.5rem 1rem;
-    border-bottom: 1px solid #f2f2f2;
+    border-bottom: 1px solid #ddd;
 }
 
 .list-item:hover {
@@ -101,7 +104,10 @@ li a {
 }
 
 #queryInput-1 {
-    height: 500px;
+    height: 400px;
+    overflow-y: auto;
+    font-size: 0.8rem;
+  
 }
 
 .select-wrapper {
@@ -111,4 +117,112 @@ li a {
 .select-dropdown {
     height: 300px;
     top: 0px;
+}
+
+.keyword {
+    font-size: 1rem;
+    font-weight: 600;
+    color: navy;
+}
+pre {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow: auto;
+    width: auto;
+    margin: 0px;
+}
+
+code.sql {
+    font-family: "Consolas", "Monaco", "Courier New", monospace;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+.button-container {
+    align-items: center;
+    justify-content: center;
+    background: #ccc;
+    padding: 0.5rem;
+}
+
+.button-container .col {
+    margin: auto !important;
+}
+.btn:hover,
+.btn-large:hover,
+.btn-small:hover {
+    background-color: #3956d7;
+}
+
+.btn,
+.btn-large,
+.btn-small {
+    background-color: #113d94 !important;
+}
+.dropdown-content {
+    background-color: #fff !important;
+}
+.dropdown-content li > a,
+.dropdown-content li > span {
+    font-size: 16px;
+    color: #113d94;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+}
+.select-wrapper input.select-dropdown {
+    border-color: #113d94 !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.progress {
+    background-color: #ccc;
+}
+
+.result-list {
+    max-height: inherit;
+    overflow-y: scroll;
+}
+
+#response-1 {
+    background: #f5f5f5;
+    margin: 0;
+}
+
+.overflow-y-hidden {
+    overflow-y: hidden;
+}
+
+.time {
+    padding: 1rem;
+
+    background-color: #113d94;
+    color: white;
+}
+.tabs .tab a,
+a.active {
+    color: #113d94 !important;
+    outline-color: #113d94 !important;
+    text-decoration-color: #113d94 !important;
+}
+.tabs .tab a:focus,
+.tabs .tab a:focus.active {
+    background-color: rgba(181, 189, 229, 0.297);
+    outline: none;
+    text-decoration-color: #113d94 !important;
+}
+
+.indicator {
+    background-color: #113d94 !important;
+}
+
+.mh-550 {
+    max-height: 550px;
 }

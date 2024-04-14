@@ -47,6 +47,8 @@ ORDER BY
     IQ.Year asc, 
     IQ.Month asc
 
+
+
 /* Query 2: Relationship between Covid-19 lockdowns and traffic accidents */
 SELECT 
     s.name AS state,
@@ -101,6 +103,7 @@ WHERE
 ORDER BY
     s.name ASC,
     accident_date ASC;
+
 
 
 
@@ -176,6 +179,7 @@ ORDER BY
         acc_unemp.month_no ASC
 
 
+
 /* Query 4: Correlation between Consumer Price Index (CPI) and accident rates */
 SELECT
     s.name,
@@ -195,6 +199,7 @@ FROM (SELECT
         mstrenges.CPI c
     WHERE 
         l.location_ID = a.location_ID and 
+
         l.state_id = c.state_id and 
         EXTRACT(YEAR FROM a.accident_date)=c.year and 
         TO_CHAR(a.accident_date, 'Q')=c.quarter and 
@@ -249,7 +254,7 @@ JOIN
     MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_rc.state_id
 WHERE
     acc_rc.year = d.year and
-    (s.state_id = 'FL' OR s.state_id='AL')
+    (s.state_id = 'FL' OR s.state_id='AL') // can do multiple states
 ORDER BY
     s.name ASC,
     acc_rc.year ASC

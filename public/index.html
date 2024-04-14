@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrendCrash</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -21,40 +22,58 @@
                     <li class="tab col s2"><a href="#query-5">Query 5</a></li>
                 </ul>
             </div>
+
+
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <h4>Complex Query 1</h4>
+                    <p>This is a bunch of text explaining query 1</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+            </div>
+
+
+
             <div id="query-1" class="col s12">
-                <div class="card m-auto mt-1">
-                    <form id="dataForm-1">
-                        <textarea class="materialize-textarea" type="text" id="queryInput-1"
-                            placeholder="Enter an oracle sql query"></textarea>
-                        <button class="btn" type="submit">Submit</button>
-                        <div class="flex">
-                            <div id="queryLoader-1" style="margin-top:1rem;"
-                                class="preloader-wrapper small active none m-auto">
-                                <div class="spinner-layer spinner-blue-only">
-                                    <div class="circle-clipper left">
-                                        <div class="circle"></div>
+                <div class="row">
+                    <div class="col s7">
+                        <div class="card m-auto mt-1 w-100">
+
+                            <form id="dataForm-1">
+                                <pre><code class="sql" id="queryInput-1"></code></pre>
+                                <div class="flex button-container">
+                                    <div class="col s5">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i
+                                                class="large material-icons">info_outline</i></a>
                                     </div>
-                                    <div class="gap-patch">
-                                        <div class="circle"></div>
-                                    </div>
-                                    <div class="circle-clipper right">
-                                        <div class="circle"></div>
+                                    <div class="col s5"> <button class="btn" type="submit">Run Query</button></div>
+                                </div>
+
+                                <div class="flex">
+                                    <div id="queryLoader-1" class="progress m-0 none">
+                                        <div class="indeterminate indigo darken-3"></div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
-
-
-                    </form>
-                    <div id="time-1" class="block pl-1">
-
+                        </form>
                     </div>
-                    <ul id="response-1" class="">
-                    </ul>
-
+                    <div class="col s5">
+                        <div class="card overflow-y-hidden ">
+                            <div id="time-1" class="block pl-1 time">
+                                Results:
+                            </div>
+                            <ul id="response-1" class="result-list mh-550">
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-field col s12">
-                    <select id="states" name="states">
+                <div>
+                </div>
+
+                <div class="input-field col s12 ">
+                    <select id="states" name="states" class="indigo darken-3">
                         <option value="">Select a state</option>
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
@@ -112,11 +131,13 @@
 
                 </div>
             </div>
+
+
             <div id="query-2" class="col s12">
                 <div class="card m-auto mt-1">
                     <form id="dataForm-2">
                         <input type="text" id="queryInput-2" placeholder="Enter an oracle sql query">
-                        <button class="btn" type="submit">Submit</button>
+                        <button class="btn" type="submit">Run Query</button>
                         <div class="flex">
                             <div id="queryLoader-2" style="margin-top:1rem;"
                                 class="preloader-wrapper small active none m-auto">
