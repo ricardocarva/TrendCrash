@@ -32,6 +32,7 @@ FROM
 WHERE
     l.city IS NOT NULL and
     s.state_id = 'FL'
+    /* Can add a year specification such as EXTRACT(YEAR FROM a.accident_date) = 2016 */  
 GROUP BY 
     s.name,
     s.state_id,
@@ -100,6 +101,9 @@ JOIN
     MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_covid.state_id
 WHERE
     EXTRACT(YEAR FROM acc_covid.accident_date) = d.year
+    /* Can add a state specification such as s.name = 'Arizona' */
+    /* Can add month specification such as EXTRACT(Month FROM acc_covid.accident_date) = 03*/
+
 ORDER BY
     s.name ASC,
     accident_date ASC;
@@ -199,12 +203,10 @@ FROM (SELECT
         mstrenges.CPI c
     WHERE 
         l.location_ID = a.location_ID and 
-
         l.state_id = c.state_id and 
         EXTRACT(YEAR FROM a.accident_date)=c.year and 
         TO_CHAR(a.accident_date, 'Q')=c.quarter and 
-        l.state_id='FL' and 
-        c.state_id='FL' 
+        l.state_id='FL' 
     GROUP BY 
         l.state_id, 
         c.quarter, 
@@ -254,7 +256,8 @@ JOIN
     MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_rc.state_id
 WHERE
     acc_rc.year = d.year and
-    (s.state_id = 'FL' OR s.state_id='AL') // can do multiple states
+    (s.state_id = 'FL' OR s.state_id='AL')
+    /* Multiple states may make sense */
 ORDER BY
     s.name ASC,
     acc_rc.year ASC
