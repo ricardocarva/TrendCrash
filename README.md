@@ -2,11 +2,11 @@
 
 ## Table of Contents 📑
 
-1. [Description](#Description) 📝
-2. [Introduction to the Database Conceptual Design](#Introduction-to-the-Database-Conceptual-Design) 🏗️
+1. [Description](#Description-📝) 📝
+2. [Introduction to the Database Conceptual Design](#Introduction-to-the-Database-Conceptual-Design-🏗️) 🏗️
 3. [Setting Up](#Setting-Up) 🔧
-4. [Run the Application](#Run-the-Application) 🚀
-5. [To Install Docker in Debian/Ubuntu Systems](#Install-Docker-in-Debian/Ubuntu-Systems) 🐧
+4. [Run the Application](#Run-the-Application-🚀) 🚀
+5. [To Install Docker in Debian/Ubuntu Systems](#Install-Docker-in-Debian/Ubuntu-Systems-🐧) 🐧
 
 ## Description 📝
 
@@ -26,7 +26,7 @@ The primary data source, containing detailed records of traffic accidents, sourc
 
 #### Road Conditions Dataset 🛣️
 
-The dataset was obtained from the Bureau of Transportation Statistics. The dataset provides data on road conditions using the International Roughness Index (IRI) for all states, spanning from 1994 to 2020.The metric is a score that describes how much total vertical movement a standard passenger vehicle would experience if driven over a segment of the road. The higher the IRI value, the worse the quality of the pavement.
+The dataset was obtained from the Bureau of Transportation Statistics. The dataset provides data on road conditions using the International Roughness Index (IRI) for all states, spanning from 1994 to 2020. The metric is a score that describes how much total vertical movement a standard passenger vehicle would experience if driven over a segment of the road. The higher the IRI value, the worse the quality of the pavement.
 
 #### COVID-19 Dataset 😷
 
@@ -75,7 +75,7 @@ docker-compose down
 
 3. Access the website at:
 
-http://localhost:3000/data
+   - http://localhost:3000/data
 
 4. When making changes, run:
 
