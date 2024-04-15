@@ -162,7 +162,7 @@ JOIN
         u.month_no, 
         u.year, 
         u.rate
-) qualRows //qualRows contains the rows that meets our queries
+) qualRows 
 WHERE
         acc_unemp.month_no between qualrows.month_no-1 and qualRows.month_no
         AND acc_unemp.year = qualRows.year
