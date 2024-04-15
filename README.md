@@ -2,11 +2,11 @@
 
 ## Table of Contents 📑
 
-1. [Description](#Description-📝) 📝
-2. [Introduction to the Database Conceptual Design](#Introduction-to-the-Database-Conceptual-Design-🏗️) 🏗️
-3. [Setting Up](#Setting-Up) 🔧
-4. [Run the Application](#Run-the-Application-🚀) 🚀
-5. [To Install Docker in Debian/Ubuntu Systems](#Install-Docker-in-Debian/Ubuntu-Systems-🐧) 🐧
+1. [Description](#Description-) 📝
+2. [Introduction to the Database Conceptual Design](#Introduction-to-the-Database-Conceptual-Design-) 🏗️
+3. [Setting Up](#Setting-Up-) 🔧
+4. [Run the Application](#Run-the-Application-) 🚀
+5. [To Install Docker in Debian/Ubuntu Systems](#Install-Docker-in-Debian/Ubuntu-Systems-) 🐧
 
 ## Description 📝
 
