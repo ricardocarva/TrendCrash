@@ -168,8 +168,7 @@ JOIN
         u.rate
 ) qualRows 
 WHERE
-        acc_unemp.month_no between qualrows.month_no-1 and qualRows.month_no
-        AND acc_unemp.year = qualRows.year
+       ((acc_unemp.month_no between qualrows.month_no-1 and qualRows.month_no AND acc_unemp.year = qualRows.year) OR (qualrows.month_no=1 and acc_unemp.month_no=12 and acc_unemp.year=qualrows.year-1))
         AND acc_unemp.state_id = qualRows.state_id
 group by
         acc_unemp.state_id, 
