@@ -47,7 +47,7 @@ JOIN
 ORDER BY
     IQ.state, 
     IQ.Year asc, 
-    IQ.Month asc
+    IQ.Month asc;
 
 /* Query 2: Relationship between Covid-19 lockdowns and traffic accidents */
 SELECT 
@@ -109,14 +109,15 @@ ORDER BY
 
 
 /* Query 3: Relationship between unemployment rates and accident rates */    
-SELECT  acc_unemp.state_id, 
+SELECT  acc_unemp.name, 
         acc_unemp.month_no as Month, 
         acc_unemp.year, 
-        acc_unemp.rate,
+        acc_unemp.rate as "Unemployment Rate",
         ROUND(accident_count / (d.driverpopulation/12),10)*1000 AS "Accident_Rate(Times 1,000)"
 FROM(
     SELECT 
-        l.state_id, 
+        s.name,
+        l.state_id,
         u.month_no, 
         u.year, 
         u.rate,
@@ -127,23 +128,23 @@ FROM(
         "THOMAS.MARTIN".Accident a ON l.location_ID = a.location_ID 
     JOIN 
         mstrenges.unemployment u ON l.state_id = u.state_id 
+    JOIN
+        MSTRENGES.STATE s ON s.state_id=l.state_id
     WHERE 
         EXTRACT(YEAR FROM a.accident_date) = u.year 
         AND EXTRACT(MONTH FROM a.accident_date) = u.month_no
     GROUP BY 
-        l.state_id, 
+        s.name, 
+        l.state_id,
         u.month_no, 
         u.year, 
         u.rate
 ) acc_unemp 
 JOIN
-    MSTRENGES.STATE s ON s.state_id = acc_unemp.state_id
-JOIN
-    MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_unemp.state_id and d.year=acc_unemp.year
-JOIN
-    mstrenges.unemployment u2 on u2.state_id = acc_unemp.state_id and u2.month_no = acc_unemp.month_no and u2.year=acc_unemp.year,
+    MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_unemp.state_id and d.year=acc_unemp.year,
     (SELECT 
-        l.state_id, 
+        s.name, 
+        l.state_id,
         u.month_no, 
         u.year, 
         u.rate
@@ -153,13 +154,16 @@ JOIN
         "THOMAS.MARTIN".Accident a ON l.location_ID = a.location_ID 
     JOIN 
         mstrenges.unemployment u ON l.state_id = u.state_id 
+    JOIN
+        MSTRENGES.STATE s ON s.state_id=l.state_id
     WHERE 
         l.state_id = 'CA' 
         AND u.rate>=4.3
         AND EXTRACT(YEAR FROM a.accident_date) = u.year 
         AND EXTRACT(MONTH FROM a.accident_date) = u.month_no
     GROUP BY 
-        l.state_id, 
+        s.name, 
+        l.state_id,
         u.month_no, 
         u.year, 
         u.rate
@@ -168,13 +172,13 @@ WHERE
         ((acc_unemp.month_no between qualrows.month_no-1 and qualRows.month_no AND acc_unemp.year = qualRows.year) OR (qualrows.month_no=1 and acc_unemp.month_no=12 and acc_unemp.year=qualrows.year-1))
         AND acc_unemp.state_id = qualRows.state_id
 group by
-        acc_unemp.state_id, 
+        acc_unemp.name, 
         acc_unemp.month_no, 
         acc_unemp.year, 
         acc_unemp.rate,
         ROUND(accident_count / (d.driverpopulation/12),10)*1000
 ORDER BY
-        acc_unemp.state_id ASC, 
+        acc_unemp.name ASC, 
         acc_unemp.year ASC,
         acc_unemp.month_no ASC
 
@@ -185,7 +189,7 @@ SELECT
     quarter,
     acc_cpi.year,
     price_index,
-    ROUND(accident_count / (d.driverpopulation/12), 10)*1000 AS "Accident_Rate(Times 1,000)"
+    ROUND(accident_count / (d.driverpopulation/4), 10)*1000 AS "Accident_Rate(Times 1,000)"
 FROM (SELECT 
         l.state_id, 
         c.quarter, 
