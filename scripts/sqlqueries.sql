@@ -1,5 +1,6 @@
 /* Query 1: Relationship between accidents and traffic details */
-SELECT IQ.state, IQ.Year, IQ.Month, IQ.severity_avg, IQ.available_traffic_details_count, ROUND(IQ.accident_count / d.driverpopulation,10)*10000 AS "Accident_Rate(Times 10,000)"
+SELECT IQ.state, IQ.Year, IQ.Month, IQ.severity_avg, IQ.available_traffic_details_count, 
+       ROUND(IQ.accident_count / (d.driverpopulation/12),10)*1000 AS "Accident_Rate(Times 1,000)"
 FROM(SELECT 
     s.name AS state,
     s.state_id as sID,
@@ -48,16 +49,14 @@ ORDER BY
     IQ.Year asc, 
     IQ.Month asc
 
-
-
 /* Query 2: Relationship between Covid-19 lockdowns and traffic accidents */
 SELECT 
     s.name AS state,
     accident_date,
     number_of_trips,
     perc_pop_at_home,
-    ROUND(accident_count / d.driverpopulation, 10) AS accident_rate,
-    trips_diff_to_2019
+    ROUND(accident_count / (d.driverpopulation/365), 10)*1000 AS "Accident_Rate(Times 1,000)",
+    trips_diff_to_2019 as "Difference_Between_Trips_In_2019_And_2020"
 FROM (
     SELECT 
         l.state_id,
@@ -100,14 +99,12 @@ JOIN
 JOIN
     MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_covid.state_id
 WHERE
-    EXTRACT(YEAR FROM acc_covid.accident_date) = d.year
-    /* Can add a state specification such as s.name = 'Arizona' */
-    /* Can add month specification such as EXTRACT(Month FROM acc_covid.accident_date) = 03*/
-
+    EXTRACT(YEAR FROM acc_covid.accident_date) = d.year and
+    s.name = 'Arizona' and
+    EXTRACT(Month FROM acc_covid.accident_date) = 03
 ORDER BY
     s.name ASC,
     accident_date ASC;
-
 
 
 
@@ -116,7 +113,7 @@ SELECT  acc_unemp.state_id,
         acc_unemp.month_no as Month, 
         acc_unemp.year, 
         acc_unemp.rate,
-        ROUND(accident_count / d.driverpopulation,10)*10000 AS "Accident_Rate(Times 10,000)"
+        ROUND(accident_count / (d.driverpopulation/12),10)*1000 AS "Accident_Rate(Times 1,000)"
 FROM(
     SELECT 
         l.state_id, 
@@ -157,8 +154,8 @@ JOIN
     JOIN 
         mstrenges.unemployment u ON l.state_id = u.state_id 
     WHERE 
-        l.state_id = 'FL' 
-        AND u.rate>=5
+        l.state_id = 'CA' 
+        AND u.rate>=4.3
         AND EXTRACT(YEAR FROM a.accident_date) = u.year 
         AND EXTRACT(MONTH FROM a.accident_date) = u.month_no
     GROUP BY 
@@ -166,21 +163,20 @@ JOIN
         u.month_no, 
         u.year, 
         u.rate
-) qualRows 
+) qualRows
 WHERE
-       ((acc_unemp.month_no between qualrows.month_no-1 and qualRows.month_no AND acc_unemp.year = qualRows.year) OR (qualrows.month_no=1 and acc_unemp.month_no=12 and acc_unemp.year=qualrows.year-1))
+        ((acc_unemp.month_no between qualrows.month_no-1 and qualRows.month_no AND acc_unemp.year = qualRows.year) OR (qualrows.month_no=1 and acc_unemp.month_no=12 and acc_unemp.year=qualrows.year-1))
         AND acc_unemp.state_id = qualRows.state_id
 group by
         acc_unemp.state_id, 
         acc_unemp.month_no, 
         acc_unemp.year, 
         acc_unemp.rate,
-        ROUND(accident_count / d.driverpopulation,10)*10000
+        ROUND(accident_count / (d.driverpopulation/12),10)*1000
 ORDER BY
         acc_unemp.state_id ASC, 
         acc_unemp.year ASC,
         acc_unemp.month_no ASC
-
 
 
 /* Query 4: Correlation between Consumer Price Index (CPI) and accident rates */
@@ -189,7 +185,7 @@ SELECT
     quarter,
     acc_cpi.year,
     price_index,
-    ROUND(accident_count / d.driverpopulation, 10)*10000 AS "Accident_Rate(Times 10,000)"
+    ROUND(accident_count / (d.driverpopulation/12), 10)*1000 AS "Accident_Rate(Times 1,000)"
 FROM (SELECT 
         l.state_id, 
         c.quarter, 
@@ -205,7 +201,7 @@ FROM (SELECT
         l.state_id = c.state_id and 
         EXTRACT(YEAR FROM a.accident_date)=c.year and 
         TO_CHAR(a.accident_date, 'Q')=c.quarter and 
-        l.state_id='FL' 
+        l.state_id='FL'
     GROUP BY 
         l.state_id, 
         c.quarter, 
@@ -229,7 +225,7 @@ SELECT
     s.name,
     acc_rc.year,
     percent_acceptable_miles,
-    ROUND(accident_count / d.driverpopulation, 10) AS accident_rate
+    ROUND(accident_count / d.driverpopulation, 10)*1000 AS "Accident_Rate(Times 1,000)"
 FROM( 
     SELECT
         l.state_id,
@@ -256,7 +252,6 @@ JOIN
 WHERE
     acc_rc.year = d.year and
     (s.state_id = 'FL' OR s.state_id='AL')
-    /* Multiple states may make sense */
 ORDER BY
     s.name ASC,
     acc_rc.year ASC
