@@ -15,7 +15,6 @@
 }
 
 .card {
-    width: 65%;
     padding: 0;
     margin: 1rem;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
@@ -107,7 +106,6 @@ li a {
     height: 400px;
     overflow-y: auto;
     font-size: 0.8rem;
-  
 }
 
 .select-wrapper {
@@ -133,6 +131,7 @@ pre {
     margin: 0px;
 }
 
+.sql,
 code.sql {
     font-family: "Consolas", "Monaco", "Courier New", monospace;
     white-space: pre-wrap;
@@ -225,4 +224,12 @@ a.active {
 
 .mh-550 {
     max-height: 550px;
+}
+pre {
+    max-height: 550px;
+}
+
+.modal-info,
+.modal-close {
+    color: #113d94 !important;
 }

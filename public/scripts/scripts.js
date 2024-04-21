@@ -17,7 +17,7 @@ const querySubmitHandler = async (element) => {
     // display loading element
     showLoader(`queryLoader-${queryNumber}`);
 
-    console.log("input data", queries[queryNumber].queryString);
+    console.log("input data", queryManager.getQueryString(queryNumber));
 
     try {
         // post to backend
@@ -26,7 +26,9 @@ const querySubmitHandler = async (element) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ data: queries[queryNumber].queryString }),
+            body: JSON.stringify({
+                data: queryManager.getQueryString(queryNumber),
+            }),
         });
 
         // error on bad response
@@ -60,31 +62,41 @@ const querySubmitHandler = async (element) => {
 };
 
 // store the queries and their html string variant
-const queries = {
-    1: {
-        queryString: "",
-        queryHTML: "",
+const queryManager = {
+    queries: {},
+    setQuery: function (queryNumber, ...params) {
+        if (!this.queries[queryNumber]) {
+            this.queries[queryNumber] = {};
+        }
+        this.queries[queryNumber].queryString = getQuery1(...params);
+        this.queries[queryNumber].queryHTML = highlightKeywords(
+            this.queries[queryNumber].queryString
+        );
     },
-    2: {
-        queryString: "",
-        queryHTML: "",
+    getQuery: function (queryNumber) {
+        return queryNumber in this.queries ? this.queries[queryNumber] : null;
     },
-    3: {
-        queryString: "",
-        queryHTML: "",
+    getQueryString: function (queryNumber) {
+        const q = this.getQuery(queryNumber);
+        return q ? q.queryString : "";
     },
-    4: {
-        queryString: "",
-        queryHTML: "",
+    getQueryHTML: function (queryNumber) {
+        const q = this.getQuery(queryNumber);
+        return q ? q.queryHTML : "";
     },
-    5: {
-        queryString: "",
-        queryHTML: "",
+    renderQueries: function () {
+        // render queries as html
+        document.getElementById("queryInput-1").innerHTML =
+            queryManager.getQueryHTML(1);
+
+        document.getElementById("queryInput-2").innerHTML =
+            queryManager.getQueryHTML(2);
     },
 };
+
 // dom is ready
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize Materialize tabs
+    // Initialize Materialize components
     var tabs = document.querySelector(".tabs");
     var instance = M.Tabs.init(tabs);
     var elems = document.querySelectorAll("select");
@@ -94,11 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
     var elems = document.querySelectorAll(".collapsible");
     var cinstances = M.Collapsible.init(elems);
 
-    queries[1].queryString = getQuery1("FL");
-    queries[1].queryHTML = highlightKeywords(queries[1].queryString);
+    queryManager.setQuery(1, "FL");
+    queryManager.setQuery(2);
+    queryManager.setQuery(3);
+    queryManager.renderQueries();
 
     // add event listeners to query form submit event for each form we have
-    document.getElementById("queryInput-1").innerHTML = queries[1].queryHTML;
     document.getElementById("dataForm-1").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
@@ -124,11 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
         querySubmitHandler(e.target);
     });
 
-    document.getElementById("states").addEventListener("change", (e) => {
-        queries[1].queryString = getQuery1(e.target.value);
-        queries[1].queryHTML = highlightKeywords(queries[1].queryString);
+    document.getElementById("states-1").addEventListener("change", (e) => {
+        queryManager.setQuery(1, e.target.value);
         document.getElementById("queryInput-1").innerHTML =
-            queries[1].queryHTML;
+            queryManager.getQueryHTML(1);
     });
 
     // start the user on the input form so they can type right away
