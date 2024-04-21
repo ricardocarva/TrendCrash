@@ -75,7 +75,7 @@ docker-compose down
 
 3. Access the website at:
 
-   - http://localhost:3000/data
+   - http://localhost:3000
 
 4. When making changes, run:
 
