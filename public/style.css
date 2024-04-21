@@ -15,7 +15,6 @@
 }
 
 .card {
-    width: 65%;
     padding: 0;
     margin: 1rem;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
@@ -103,15 +102,18 @@ li a {
     background-color: rgb(232, 240, 254);
 }
 
-#queryInput-1 {
+#queryInput-1,
+#queryInput-2,
+#queryInput-3,
+#queryInput-4,
+#queryInput-5 {
     height: 400px;
     overflow-y: auto;
     font-size: 0.8rem;
-  
 }
 
 .select-wrapper {
-    width: 25%;
+    /* width: 25%; */
 }
 
 .select-dropdown {
@@ -133,6 +135,7 @@ pre {
     margin: 0px;
 }
 
+.sql,
 code.sql {
     font-family: "Consolas", "Monaco", "Courier New", monospace;
     white-space: pre-wrap;
@@ -155,7 +158,7 @@ code.sql {
 .btn:hover,
 .btn-large:hover,
 .btn-small:hover {
-    background-color: #3956d7;
+    background-color: #1f4ba2 !important;
 }
 
 .btn,
@@ -191,7 +194,11 @@ code.sql {
     overflow-y: scroll;
 }
 
-#response-1 {
+#response-1,
+#response-2,
+#response-3,
+#response-4,
+#response-5 {
     background: #f5f5f5;
     margin: 0;
 }
@@ -223,6 +230,38 @@ a.active {
     background-color: #113d94 !important;
 }
 
+.nav-wrapper {
+    background-color: #113d94;
+    color: #fff;
+}
+
 .mh-550 {
     max-height: 550px;
+}
+pre {
+    max-height: 550px;
+}
+
+.modal-info,
+.modal-close {
+    color: #113d94 !important;
+}
+
+.flow-text {
+    font-size: 1.48rem !important;
+}
+input[type="text"]:not(.browser-default):focus:not([readonly]),
+input.valid[type="number"]:not(.browser-default):focus:not([readonly]) {
+    box-shadow: 0 1px 0 0#113d94 !important;
+    border-bottom: #113d94 !important;
+}
+input[type="text"]:not(.browser-default):focus:not([readonly]),
+input[type="number"]:not(.browser-default):focus:not([readonly]) {
+    box-shadow: 0 1px 0 0 #113d94 !important;
+    border-bottom: #113d94 !important;
+}
+
+label,
+label.active {
+    color: #113d94 !important;
 }

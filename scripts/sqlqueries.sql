@@ -221,7 +221,7 @@ WHERE
 ORDER BY 
     s.name, 
     acc_cpi.year,
-    quarter asc;
+    quarter ASC;
 
 
 /* Query 5: Correlation between road conditions and accident rates */

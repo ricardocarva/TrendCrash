@@ -7,11 +7,153 @@
     <title>TrendCrash</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">📊 TrendCrash 🚗💥</a>
+        </div>
+    </nav>
+
+
     <div class="flex">
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <title>Chart Example</title>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </head>
+
+        <body>
+            <!--          <canvas id="myChart" width="400" height="400" style="max-height: 500px; max-width:500px;"></canvas>
+            <script>
+                const ctx = document.getElementById('myChart').getContext('2d');
+
+                const rawData = [
+                    "Florida,2016,6,2.26,1178,1.3009739",
+                    "Florida,2016,7,2.29,3282,3.6355311",
+                    "Florida,2016,8,2.27,3741,4.0206717",
+                    "Florida,2016,9,2.31,3518,3.8448644",
+                    "Florida,2016,10,2.29,3176,3.6527029",
+                    "Florida,2016,11,2.31,3699,4.5562706",
+                    "Florida,2016,12,2.31,3151,3.8661248",
+                    "Florida,2017,1,2.29,3074,3.564256",
+                    "Florida,2017,2,2.32,2452,3.1328521",
+                    "Florida,2017,3,2.27,3648,4.4827803",
+                    "Florida,2017,4,2.3,2378,2.9171501",
+                    "Florida,2017,5,2.32,2113,2.5494221",
+                    "Florida,2017,6,2.37,1780,2.2477577",
+                    "Florida,2017,7,2.43,1385,1.9230108",
+                    "Florida,2017,8,2.31,3830,4.1317671",
+                    "Florida,2017,9,2.36,2486,2.9458043",
+                    "Florida,2017,10,2.39,2470,3.2466727",
+                    "Florida,2017,11,2.36,2778,3.5738074",
+                    "Florida,2017,12,2.36,2396,3.2848782",
+                    "Florida,2018,1,2.41,2176,2.9170987",
+                    "Florida,2018,2,2.37,2444,3.062329",
+                    "Florida,2018,3,2.38,2920,3.6291956",
+                    "Florida,2018,4,2.36,2861,3.4847461",
+                    "Florida,2018,5,2.37,2688,3.3769946",
+                    "Florida,2018,6,2.39,2197,2.8202785",
+                    "Florida,2018,7,2.4,2410,2.9928371",
+                    "Florida,2018,8,2.39,3004,3.7556865",
+                    "Florida,2018,9,2.41,2317,3.0264118",
+                    "Florida,2018,10,2.36,3377,4.3022521",
+                    "Florida,2018,11,2.39,2894,3.5924976",
+                    "Florida,2018,12,2.39,2379,3.1583684",
+                    "Florida,2019,1,2.38,2631,3.1332926",
+                    "Florida,2019,2,2.41,1891,2.4924444",
+                    "Florida,2019,3,2.4,2114,2.8618382",
+                    "Florida,2019,4,2.36,2622,3.1325214",
+                    "Florida,2019,5,2.36,2693,3.1649108",
+                    "Florida,2019,6,2.37,2285,2.8016864",
+                    "Florida,2019,7,2.35,2527,3.113242",
+                    "Florida,2019,8,2.35,2408,2.8734059",
+                    "Florida,2019,9,2.36,2304,2.769297",
+                    "Florida,2019,10,2.33,2903,3.4803223",
+                    "Florida,2019,11,2.31,2571,3.1232673",
+                    "Florida,2019,12,2.37,2027,2.4947579",
+                    "Florida,2020,1,2.34,2411,2.9145983",
+                    "Florida,2020,2,2.34,2409,2.8527481",
+                ];
+
+                const colors = [
+                    'rgba(255, 99, 132, 0.5)', // Red
+                    'rgba(54, 162, 235, 0.5)', // Blue
+                    'rgba(255, 206, 86, 0.5)',  // Yellow
+                    'rgba(75, 192, 192, 0.5)',  // Green
+                    'rgba(153, 102, 255, 0.5)', // Purple
+                    'rgba(255, 159, 64, 0.5)',  // Orange
+                    // Add more colors if you have more years
+                ];
+
+                // Months labels
+                const monthLabels = [
+                    '01', '02', '03', '04', '05', '06',
+                    '07', '08', '09', '10', '11', '12'
+                ];
+
+                let dataByYear = {};
+
+                // Process rawData to fit into the data structure
+                rawData.forEach(item => {
+                    const [state, year, month, , , value] = item.split(',');
+                    if (!dataByYear[year]) {
+                        dataByYear[year] = Array(12).fill(null); // Prepare an array of 12 months
+                    }
+                    dataByYear[year][parseInt(month) - 1] = parseFloat(value); // Month index is zero-based
+                });
+
+                // Prepare datasets
+                const datasets = Object.keys(dataByYear).map((year, i) => {
+                    return {
+                        label: year,
+                        data: dataByYear[year],
+                        fill: true,
+                        borderColor: colors[i % colors.length], // Cycle through colors
+                        backgroundColor: colors[i % colors.length], // Use the same color for background
+                        tension: 0.4
+                    };
+                });
+
+                // Chart initialization
+                // const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: monthLabels,
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                title: {
+                                    display: true,
+                                    text: 'Value'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            }
+                        }
+                    }
+                });
+            </script> -->
+        </body>
+
+        </html>
+
+
         <div class="row w-60 max-w-60">
             <div class="col s12">
                 <ul class="tabs flex">
@@ -23,19 +165,165 @@
                 </ul>
             </div>
 
-
+            <!-- modals -->
             <div id="modal1" class="modal">
                 <div class="modal-content">
-                    <h4>Complex Query 1</h4>
-                    <p>This is a bunch of text explaining query 1</p>
+                    <!-- <ul class="tabs flex">
+                        <li class="tab col s6"><a class="active" href="#modal1-about">About</a></li>
+                        <li class="tab col s6"><a href="#modal1-value">Value</a></li>
+                    </ul> -->
+                    <div id="modal1-about">
+                        <h4 class="modal-info">About The Query</h2>
+                            <p class="flow-text">The subquery “available_traffic_details” (ATD) lists all of the various
+                                traffic
+                                details, such as
+                                a speedbump, roundabout or railroad crossing, that is stored in each state for a given
+                                time
+                                frame.</p>
+                            <p class="flow-text">
+                                This subquery is joined with the accident, trafficdetails, locationdetails and state
+                                tables to ensure the necessary info is available. Then all of this is wrapped up in a
+                                subquery
+                                titled “IQ”.
+                            </p>
+                            <p class="flow-text">The purpose of this is to join IQ with the driverpopulation table so
+                                that
+                                we
+                                could
+                                determine the accident count divided by the driver population to determine the accident
+                                rate. We
+                                multiplied the accident rate times 10,000 to make it easier to read. We would expect the
+                                accident rate to go down when the traffic details count goes up.</p>
+                    </div>
+                    <div id="modal1-value">
+                        <h4 class="modal-info">Value To The Customer</h2>
+                            <p class="flow-text">Customers will value how our software uses traffic details like
+                                speedbumps
+                                and railroad crossings to predict accident rates, helping them understand how
+                                infrastructural changes affect safety. This insight can guide decisions on urban
+                                planning
+                                and road design to improve driver safety.</p>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
                 </div>
             </div>
 
+            <div id="modal2" class="modal">
+                <div class="modal-content">
+                    <div id="modal2-about">
+                        <h4 class="modal-info">About The Query</h2>
+                            <p class="flow-text">This query aims to determine the effect on Covid19 and traffic
+                                accidents.
+                                Our first inner subquery “beforelockdown” determines the number of accidents in 2019
+                                which is the year before covid. </p>
 
+                            <p class="flow-text">It is wrapped into the subquery “acc_covid.” Acc_covid
+                                gathers all of the accident data from various tables by day. This is then merged with
+                                driverpopulation to get the total number of drivers to get our output. </p>
 
+                            <p class="flow-text">The main
+                                variables to compare are the accident rate(in 2020) and the difference in trips between
+                                2019 and 2020 (trips in 2019 minus the trips in 2020). As the difference in trips goes
+                                down, we would expect the accident rate to go up because that means there were more
+                                people driving in 2020 at that time.</p>
+                    </div>
+                    <div id="modal2-value">
+                        <h4 class="modal-info">Value To The Customer</h2>
+                            <p class="flow-text">By analyzing the impact of COVID-19 on traffic accidents, our software
+                                enables users to identify patterns in mobility and safety during unusual events, aiding
+                                in more effective emergency response and policy-making during crises.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+            </div>
+
+            <div id="modal3" class="modal">
+                <div class="modal-content">
+                    <div id="modal3-about">
+                        <h4 class="modal-info">About The Query</h2>
+                            <p class="flow-text">In this query we examine the effect of unemployment rate
+                                and accident rates. We create two primary subqueries, acc_unemp and
+                                qualrows.</p>
+
+                            <p class="flow-text">Both subqueries join the appropriate tables and find
+                                the
+                                state, month, year, unemployment rate and accident count. What differs
+                                is that qualrows also has the dynamic queries so it has only the rows
+                                that meets our criteria.
+                            </p>
+
+                            <p class="flow-text">We finally output the data in acc_unemp that
+                                either is the same month/year as qualrows or the month before. This
+                                allows us to see the rows with the necessary unemployment rate and the
+                                month before so that we can compare.</p>
+                    </div>
+                    <div id="modal3-value">
+                        <h4 class="modal-info">Value To The Customer</h2>
+                            <p class="flow-text">This tool provides crucial data linking unemployment rates to accident
+                                rates, empowering customers to better forecast risk and implement targeted interventions
+                                in regions experiencing economic downturns.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+            </div>
+
+            <div id="modal4" class="modal">
+                <div class="modal-content">
+                    <div id="modal4-about">
+                        <h4 class="modal-info">About The Query</h2>
+                            <p class="flow-text">In Query 4 we examine the effect of CPI on accident rates. Our subquery
+                                acc_cpi joins all the necessary tables and contains dynamic queries so that we get all
+                                of the necessary info.</p>
+
+                            <p class="flow-text">It is a subquery so that it may have its accident count divided
+                                by driverpopulation so that we may determine accident rates.
+                            </p>
+
+                            <p class="flow-text">The cpi dataset did not
+                                have as much data so this is a relatively simple query.</p>
+                    </div>
+                    <div id="modal4-value">
+                        <h4 class="modal-info">Value To The Customer</h2>
+                            <p class="flow-text">Customers can use the correlation between the Consumer Price Index
+                                (CPI) and accident rates to adjust insurance premiums or allocate resources more
+                                efficiently, improving financial outcomes and road safety.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+            </div>
+
+            <div id="modal5" class="modal">
+                <div class="modal-content">
+                    <div id="modal5-about">
+                        <h4 class="modal-info">About The Query</h2>
+                            <p class="flow-text">This query looks to examine road conditions (acceptable road) and
+                                accident
+                                rates. Our subquery acc_rc gathers all of the relevant info and sorts it based off the
+                                dynamic queries. This is also a rather simple query because it is by year not month</p>
+
+                    </div>
+                    <div id="modal5-value">
+                        <h4 class="modal-info">Value To The Customer</h2>
+                            <p class="flow-text">By examining the relationship between road conditions and accident
+                                rates on a yearly basis, our software offers valuable insights for long-term safety
+                                improvements and infrastructure investment strategies.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+            </div>
+
+            <!-- query content -->
             <div id="query-1" class="col s12">
                 <div class="row">
                     <div class="col s7">
@@ -72,8 +360,8 @@
                 <div>
                 </div>
 
-                <div class="input-field col s12 ">
-                    <select id="states" name="states" class="indigo darken-3">
+                <div class="input-field col s4 ">
+                    <select id="states-1" name="states" class="indigo darken-3">
                         <option value="">Select a state</option>
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
@@ -84,7 +372,107 @@
                         <option value="CT">Connecticut</option>
                         <option value="DE">Delaware</option>
                         <option value="DC">District Of Columbia</option>
-                        <option value="FL">Florida</option>
+                        <option value="FL" selected>Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                    <label>Select a State</label>
+                </div>
+                <div class="input-field col s4">
+                    <input id="city-1" placeholder="City Name" type="text">
+                    <label for="first_name">City</label>
+                </div>
+            </div>
+
+            <!-- query 2 -->
+            <div id="query-2" class="col s12">
+                <div class="row">
+                    <div class="col s7">
+                        <div class="card m-auto mt-1 w-100">
+
+                            <form id="dataForm-2">
+                                <pre><code class="sql" id="queryInput-2"></code></pre>
+                                <div class="flex button-container">
+                                    <div class="col s5">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#modal2"><i
+                                                class="large material-icons">info_outline</i></a>
+                                    </div>
+                                    <div class="col s5"> <button class="btn" type="submit">Run Query</button></div>
+                                </div>
+
+                                <div class="flex">
+                                    <div id="queryLoader-2" class="progress m-0 none">
+                                        <div class="indeterminate indigo darken-3"></div>
+                                    </div>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="col s5">
+                        <div class="card overflow-y-hidden ">
+                            <div id="time-2" class="block pl-1 time">
+                                Results:
+                            </div>
+                            <ul id="response-2" class="result-list mh-550">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+
+                <div class="input-field col s4 ">
+                    <select id="states-2" name="states-2" class="indigo darken-3">
+                        <option value="">Select a state</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL" selected>Florida</option>
                         <option value="GA">Georgia</option>
                         <option value="HI">Hawaii</option>
                         <option value="ID">Idaho</option>
@@ -132,133 +520,364 @@
                 </div>
             </div>
 
-
-            <div id="query-2" class="col s12">
-                <div class="card m-auto mt-1">
-                    <form id="dataForm-2">
-                        <input type="text" id="queryInput-2" placeholder="Enter an oracle sql query">
-                        <button class="btn" type="submit">Run Query</button>
-                        <div class="flex">
-                            <div id="queryLoader-2" style="margin-top:1rem;"
-                                class="preloader-wrapper small active none m-auto">
-                                <div class="spinner-layer spinner-blue-only">
-                                    <div class="circle-clipper left">
-                                        <div class="circle"></div>
-                                    </div>
-                                    <div class="gap-patch">
-                                        <div class="circle"></div>
-                                    </div>
-                                    <div class="circle-clipper right">
-                                        <div class="circle"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div id="time-2" class="block pl-1">
-
-                    </div>
-                    <ul id="response-2" class="">
-                    </ul>
-
-                </div>
-            </div>
+            <!-- query 3 -->
             <div id="query-3" class="col s12">
-                <div class="card m-auto mt-1">
-                    <form id="dataForm-3">
-                        <input type="text" id="queryInput-3" placeholder="Enter an oracle sql query">
-                        <button class="btn" type="submit">Submit</button>
-                        <div class="flex">
-                            <div id="queryLoader-3" style="margin-top:1rem;"
-                                class="preloader-wrapper small active none m-auto">
-                                <div class="spinner-layer spinner-blue-only">
-                                    <div class="circle-clipper left">
-                                        <div class="circle"></div>
+                <div class="row">
+                    <div class="col s7">
+                        <div class="card m-auto mt-1 w-100">
+
+                            <form id="dataForm-3">
+                                <pre><code class="sql" id="queryInput-3"></code></pre>
+                                <div class="flex button-container">
+                                    <div class="col s5">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#modal3"><i
+                                                class="large material-icons">info_outline</i></a>
                                     </div>
-                                    <div class="gap-patch">
-                                        <div class="circle"></div>
-                                    </div>
-                                    <div class="circle-clipper right">
-                                        <div class="circle"></div>
+                                    <div class="col s5"> <button class="btn" type="submit">Run Query</button></div>
+                                </div>
+
+                                <div class="flex">
+                                    <div id="queryLoader-3" class="progress m-0 none">
+                                        <div class="indeterminate indigo darken-3"></div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
-                    </form>
-                    <div id="time-3" class="block pl-1">
-
+                        </form>
                     </div>
-                    <ul id="response-3" class="pl-1">
-                    </ul>
+                    <div class="col s5">
+                        <div class="card overflow-y-hidden ">
+                            <div id="time-3" class="block pl-1 time">
+                                Results:
+                            </div>
+                            <ul id="response-3" class="result-list mh-550">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+
+                <div class="input-field col s4">
+                    <select id="states-3" name="states-3" class="indigo darken-3">
+                        <option value="">Select a state</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL" selected>Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                    <label>Select a State</label>
 
                 </div>
+                <div class="input-field col s4">
+                    <input id="rate-3" type="number" class="validate[custom[number]]">
+                    <label for="rate-3">Unemployment Rate (enter a number)</label>
+                </div>
             </div>
+
+            <!-- query 4 -->
             <div id="query-4" class="col s12">
-                <div class="card m-auto mt-1">
-                    <form id="dataForm-4">
-                        <input type="text" id="queryInput-4" placeholder="Enter an oracle sql query">
-                        <button class="btn" type="submit">Submit</button>
-                        <div class="flex">
-                            <div id="queryLoader-4" style="margin-top:1rem;"
-                                class="preloader-wrapper small active none m-auto">
-                                <div class="spinner-layer spinner-blue-only">
-                                    <div class="circle-clipper left">
-                                        <div class="circle"></div>
+                <div class="row">
+                    <div class="col s7">
+                        <div class="card m-auto mt-1 w-100">
+
+                            <form id="dataForm-4">
+                                <pre><code class="sql" id="queryInput-4"></code></pre>
+                                <div class="flex button-container">
+                                    <div class="col s5">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#modal4"><i
+                                                class="large material-icons">info_outline</i></a>
                                     </div>
-                                    <div class="gap-patch">
-                                        <div class="circle"></div>
-                                    </div>
-                                    <div class="circle-clipper right">
-                                        <div class="circle"></div>
+                                    <div class="col s5"> <button class="btn" type="submit">Run Query</button></div>
+                                </div>
+
+                                <div class="flex">
+                                    <div id="queryLoader-4" class="progress m-0 none">
+                                        <div class="indeterminate indigo darken-3"></div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
-                    </form>
-                    <div id="time-4" class="block pl-1">
-
+                        </form>
                     </div>
-                    <ul id="response-4" class="pl-1">
-                    </ul>
+                    <div class="col s5">
+                        <div class="card overflow-y-hidden ">
+                            <div id="time-4" class="block pl-1 time">
+                                Results:
+                            </div>
+                            <ul id="response-4" class="result-list mh-550">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+
+                <div class="input-field col s4">
+                    <select id="states-4" name="states-4" class="indigo darken-3">
+                        <option value="">Select a state</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL" selected>Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                    <label>Select a State</label>
 
                 </div>
+                <div class="input-field col s4">
+                    <input id="rate-4" type="number" class="validate[custom[number]]">
+                    <label for="rate-4">Unemployment Rate (enter a number)</label>
+                </div>
             </div>
+
+            <!-- query 5 -->
             <div id="query-5" class="col s12">
-                <div class="card m-auto mt-1">
-                    <form id="dataForm-5">
-                        <input type="text" id="queryInput-5" placeholder="Enter an oracle sql query">
-                        <button class="btn" type="submit">Submit</button>
-                        <div class="flex">
-                            <div id="queryLoader-5" style="margin-top:1rem;"
-                                class="preloader-wrapper small active none m-auto">
-                                <div class="spinner-layer spinner-blue-only">
-                                    <div class="circle-clipper left">
-                                        <div class="circle"></div>
+                <div class="row">
+                    <div class="col s7">
+                        <div class="card m-auto mt-1 w-100">
+
+                            <form id="dataForm-5">
+                                <pre><code class="sql" id="queryInput-5"></code></pre>
+                                <div class="flex button-container">
+                                    <div class="col s5">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#modal5"><i
+                                                class="large material-icons">info_outline</i></a>
                                     </div>
-                                    <div class="gap-patch">
-                                        <div class="circle"></div>
-                                    </div>
-                                    <div class="circle-clipper right">
-                                        <div class="circle"></div>
+                                    <div class="col s5"> <button class="btn" type="submit">Run Query</button></div>
+                                </div>
+
+                                <div class="flex">
+                                    <div id="queryLoader-5" class="progress m-0 none">
+                                        <div class="indeterminate indigo darken-3"></div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
-                    </form>
-                    <div id="time-5" class="block pl-1">
-
+                        </form>
                     </div>
-                    <ul id="response-5" class="pl-1">
-                    </ul>
+                    <div class="col s5">
+                        <div class="card overflow-y-hidden ">
+                            <div id="time-5" class="block pl-1 time">
+                                Results:
+                            </div>
+                            <ul id="response-5" class="result-list mh-550">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
 
+                <div class="input-field col s4">
+                    <select id="states-5" name="states-5" class="indigo darken-3">
+                        <option value="">Select a state</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL" selected>Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                </div>
+                <div class="input-field col s4">
+                    <select id="states-5-2" name="states-5-2" class="indigo darken-3">
+                        <option value="">Select a state</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA" selected>Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                    <label>Select a State</label>
                 </div>
             </div>
+
         </div>
 
-    </div>
-
-    <script src="scripts/scripts.js" type="module"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="scripts/scripts.js" type="module"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>

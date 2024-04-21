@@ -1,5 +1,12 @@
 import { showLoader, hideLoader } from "./utils.js";
-import { getQuery1, highlightKeywords } from "./queries.js";
+import {
+    getQuery1,
+    getQuery2,
+    getQuery3,
+    getQuery4,
+    getQuery5,
+    highlightKeywords,
+} from "./queries.js";
 
 // submits a query, takes an element
 const querySubmitHandler = async (element) => {
@@ -7,6 +14,7 @@ const querySubmitHandler = async (element) => {
     const queryNumber = element.id[element.id.length - 1];
     const ul = document.getElementById(`response-${queryNumber}`);
     const timeDiv = document.getElementById(`time-${queryNumber}`);
+    console.log("queryNumber: ", queryNumber);
 
     // clear previous time and results
     timeDiv.innerText = "Results: ";
@@ -17,7 +25,7 @@ const querySubmitHandler = async (element) => {
     // display loading element
     showLoader(`queryLoader-${queryNumber}`);
 
-    console.log("input data", queries[queryNumber].queryString);
+    console.log("input data", queryManager.getQueryString(queryNumber));
 
     try {
         // post to backend
@@ -26,7 +34,9 @@ const querySubmitHandler = async (element) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ data: queries[queryNumber].queryString }),
+            body: JSON.stringify({
+                data: queryManager.getQueryString(queryNumber),
+            }),
         });
 
         // error on bad response
@@ -60,31 +70,72 @@ const querySubmitHandler = async (element) => {
 };
 
 // store the queries and their html string variant
-const queries = {
-    1: {
-        queryString: "",
-        queryHTML: "",
+const queryManager = {
+    queries: {},
+    setQuery: function (queryNumber, ...params) {
+        if (!this.queries[queryNumber]) {
+            this.queries[queryNumber] = {};
+        }
+
+        let queryString = "";
+        switch (queryNumber) {
+            case 1:
+                queryString = getQuery1(...params);
+                break;
+            case 2:
+                queryString = getQuery2(...params);
+                break;
+            case 3:
+                queryString = getQuery3(...params);
+                break;
+            case 4:
+                queryString = getQuery4(...params);
+                break;
+            case 5:
+                queryString = getQuery5(...params);
+                break;
+            default:
+                break;
+        }
+
+        this.queries[queryNumber].queryString = queryString;
+        this.queries[queryNumber].queryHTML = highlightKeywords(
+            this.queries[queryNumber].queryString
+        );
     },
-    2: {
-        queryString: "",
-        queryHTML: "",
+    getQuery: function (queryNumber) {
+        return queryNumber in this.queries ? this.queries[queryNumber] : null;
     },
-    3: {
-        queryString: "",
-        queryHTML: "",
+    getQueryString: function (queryNumber) {
+        const q = this.getQuery(queryNumber);
+        return q ? q.queryString : "";
     },
-    4: {
-        queryString: "",
-        queryHTML: "",
+    getQueryHTML: function (queryNumber) {
+        const q = this.getQuery(queryNumber);
+        return q ? q.queryHTML : "";
     },
-    5: {
-        queryString: "",
-        queryHTML: "",
+    renderQueries: function () {
+        // render queries as html
+        document.getElementById("queryInput-1").innerHTML =
+            queryManager.getQueryHTML(1);
+
+        document.getElementById("queryInput-2").innerHTML =
+            queryManager.getQueryHTML(2);
+
+        document.getElementById("queryInput-3").innerHTML =
+            queryManager.getQueryHTML(3);
+
+        document.getElementById("queryInput-4").innerHTML =
+            queryManager.getQueryHTML(4);
+
+        document.getElementById("queryInput-5").innerHTML =
+            queryManager.getQueryHTML(5);
     },
 };
+
 // dom is ready
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize Materialize tabs
+    // Initialize Materialize components
     var tabs = document.querySelector(".tabs");
     var instance = M.Tabs.init(tabs);
     var elems = document.querySelectorAll("select");
@@ -93,12 +144,17 @@ document.addEventListener("DOMContentLoaded", () => {
     var minstances = M.Modal.init(elems);
     var elems = document.querySelectorAll(".collapsible");
     var cinstances = M.Collapsible.init(elems);
+    //var elems = document.querySelectorAll(".collapsible");
+    //M.UpdateTextFields();
 
-    queries[1].queryString = getQuery1("FL");
-    queries[1].queryHTML = highlightKeywords(queries[1].queryString);
+    queryManager.setQuery(1, "FL", "Orlando");
+    queryManager.setQuery(2, "FL");
+    queryManager.setQuery(3, "FL", 4.3);
+    queryManager.setQuery(4, "FL");
+    queryManager.setQuery(5, "FL", "GA");
+    queryManager.renderQueries();
 
     // add event listeners to query form submit event for each form we have
-    document.getElementById("queryInput-1").innerHTML = queries[1].queryHTML;
     document.getElementById("dataForm-1").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
@@ -124,11 +180,71 @@ document.addEventListener("DOMContentLoaded", () => {
         querySubmitHandler(e.target);
     });
 
-    document.getElementById("states").addEventListener("change", (e) => {
-        queries[1].queryString = getQuery1(e.target.value);
-        queries[1].queryHTML = highlightKeywords(queries[1].queryString);
-        document.getElementById("queryInput-1").innerHTML =
-            queries[1].queryHTML;
+    // event listeners for query 1
+    document.getElementById("states-1").addEventListener("change", (e) => {
+        const city = document.getElementById("states-1").value;
+        if (city) {
+            queryManager.setQuery(1, e.target.value, city);
+            document.getElementById("queryInput-1").innerHTML =
+                queryManager.getQueryHTML(1);
+        }
+    });
+
+    document.getElementById("city-1").addEventListener("change", (e) => {
+        const state = document.getElementById("states-1").value;
+        if (state) {
+            queryManager.setQuery(1, state, e.target.value);
+            document.getElementById("queryInput-1").innerHTML =
+                queryManager.getQueryHTML(1);
+        }
+    });
+
+    // event listeners for query 2
+    document.getElementById("states-2").addEventListener("change", (e) => {
+        queryManager.setQuery(2, e.target.value);
+        document.getElementById("queryInput-2").innerHTML =
+            queryManager.getQueryHTML(2);
+    });
+
+    // event listeners for query 3
+    document.getElementById("states-3").addEventListener("change", (e) => {
+        queryManager.setQuery(3, e.target.value);
+        document.getElementById("queryInput-3").innerHTML =
+            queryManager.getQueryHTML(3);
+    });
+
+    document.getElementById("rate-3").addEventListener("change", (e) => {
+        const state = document.getElementById("states-3").value;
+        queryManager.setQuery(3, state, e.target.value);
+        document.getElementById("queryInput-3").innerHTML =
+            queryManager.getQueryHTML(3);
+    });
+
+    // event listeners for query 4
+    document.getElementById("states-4").addEventListener("change", (e) => {
+        queryManager.setQuery(4, e.target.value);
+        document.getElementById("queryInput-4").innerHTML =
+            queryManager.getQueryHTML(4);
+    });
+
+    document.getElementById("states-5").addEventListener("change", (e) => {
+        const state2 = document.getElementById("states-5-2").value;
+
+        if (state2) {
+            queryManager.setQuery(5, e.target.value, state2);
+            document.getElementById("queryInput-5").innerHTML =
+                queryManager.getQueryHTML(5);
+        }
+    });
+
+    document.getElementById("states-5-2").addEventListener("change", (e) => {
+        const state1 = document.getElementById("states-5").value;
+
+        if (state1) {
+            queryManager.setQuery(5, state1, e.target.value);
+            document.getElementById("queryInput-5").innerHTML =
+                queryManager.getQueryHTML(5);
+        }
     });
 
     // start the user on the input form so they can type right away
