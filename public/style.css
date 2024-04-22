@@ -248,6 +248,11 @@ pre {
     color: #113d94 !important;
 }
 
+.modal {
+    width: 70% !important;
+    max-height: 85% !important;
+}
+
 .flow-text {
     font-size: 1.48rem !important;
 }
@@ -258,6 +263,11 @@ input.valid[type="number"]:not(.browser-default):focus:not([readonly]) {
 }
 input[type="text"]:not(.browser-default):focus:not([readonly]),
 input[type="number"]:not(.browser-default):focus:not([readonly]) {
+    box-shadow: 0 1px 0 0 #113d94 !important;
+    border-bottom: #113d94 !important;
+}
+input[type="number"]:not(.browser-default),
+input[type="text"]:not(.browser-default) {
     box-shadow: 0 1px 0 0 #113d94 !important;
     border-bottom: #113d94 !important;
 }
@@ -281,4 +291,8 @@ label.active {
 }
 ::-webkit-scrollbar-track {
     background: #113d94 !important;
+}
+.green-toast {
+    background-color: #109410;
+    color: white;
 }

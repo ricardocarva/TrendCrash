@@ -53,14 +53,14 @@ ORDER BY
 `;
 };
 
-export const getQuery2 = (state) => {
+export const getQuery2 = (state, month) => {
     return `SELECT 
     s.name AS state,
     accident_date,
     number_of_trips,
     perc_pop_at_home,
     ROUND(accident_count / (d.driverpopulation/365), 10)*1000 AS "Accident_Rate(Times 1,000)",
-    trips_diff_to_2019 as "Difference_Between_Trips_In_2019_And_2020"
+    "2019_number_of_trips"
 FROM (
     SELECT 
         l.state_id,
@@ -68,7 +68,7 @@ FROM (
         c.number_of_trips,
         ROUND(c.population_staying_at_home / (c.population_staying_at_home + c.population_not_staying_at_home) * 100,2) AS perc_pop_at_home,
         COUNT(*) AS accident_count,
-        (beforeLockdown.number_of_trips - c.number_of_trips) AS trips_diff_to_2019
+        beforeLockdown.number_of_trips AS "2019_number_of_trips"
     FROM 
         MSTRENGES.COVIDTRIPSBYDISTANCE c
         JOIN
@@ -96,7 +96,7 @@ FROM (
         a.accident_date,
         c.number_of_trips,
         c.population_staying_at_home / (c.population_staying_at_home + c.population_not_staying_at_home),
-        (beforeLockdown.number_of_trips - c.number_of_trips)
+        beforeLockdown.number_of_trips
     ) acc_covid
 JOIN
     MSTRENGES.STATE s ON s.state_id = acc_covid.state_id
@@ -104,8 +104,8 @@ JOIN
     MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_covid.state_id
 WHERE
     EXTRACT(YEAR FROM acc_covid.accident_date) = d.year and
-    s.state_id = '${state}' AND
-    EXTRACT(Month FROM acc_covid.accident_date) = 03
+    s.state_id = '${state}' and
+    EXTRACT(Month FROM acc_covid.accident_date) = ${month}
 ORDER BY
     s.name ASC,
     accident_date ASC`;
