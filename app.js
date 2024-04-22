@@ -46,7 +46,15 @@ app.post("/data", async (req, res) => {
     // validates and returns the santized sql query and it
     const query = safeGuardQuery(req.body.data);
     console.log(query, "====");
-    if (query) {
+    if (!connection) {
+        console.error("Database connection is not established. Make sure you're connected to the VPN.");
+        res.status(500).json({
+            message: "Database connection failed. Please ensure you are connected to the VPN and try again.",
+            error: "No database connection",
+            suggestion: "Please confirm your VPN connection and restart the container."
+        });
+
+    }else if (query) {
         try {
             const start = Date.now();
             const result = await connection.execute(query);
@@ -66,10 +74,11 @@ app.post("/data", async (req, res) => {
             // send response
             res.json(resObj);
         } catch (err) {
-            console.log(err);
-            res.status(500).send(
-                "Error executing query, confirm table exists and check query format."
-            );
+            console.error("Error executing query: ", err.message);
+            res.status(500).json({
+                message: "Error executing query, confirm table exists and check query format.",
+                error: err.message,
+            });
         }
     } else {
         console.log("query doesn't pass validity check");
