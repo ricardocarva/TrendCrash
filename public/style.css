@@ -181,6 +181,11 @@ code.sql {
     border-color: #113d94 !important;
 }
 
+#query-4 .dropdown-content {
+    height: 250px !important;
+    top: -205px !important;
+}
+
 .m-0 {
     margin: 0 !important;
 }
@@ -295,4 +300,13 @@ label.active {
 .green-toast {
     background-color: #109410;
     color: white;
+}
+
+.red-toast {
+    background-color: #941010;
+    color: white;
+}
+
+.justify-center {
+    justify-content: center;
 }
