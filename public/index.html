@@ -29,6 +29,7 @@
                     <li class="tab col s2"><a href="#query-3">Query 3</a></li>
                     <li class="tab col s2"><a href="#query-4">Query 4</a></li>
                     <li class="tab col s2"><a href="#query-5">Query 5</a></li>
+                    <li class="tab col s2"><a href="#query-6">Query 6</a></li>
                 </ul>
             </div>
 
@@ -41,35 +42,52 @@
                     </ul> -->
                     <div id="modal1-about">
                         <h4 class="modal-info">About The Query</h2>
-                            <p class="flow-text">The subquery “available_traffic_details” (ATD) lists all of the various
-                                traffic
-                                details, such as
-                                a speedbump, roundabout or railroad crossing, that is stored in each state for a given
-                                time
-                                frame.</p>
+                            <p class="flow-text">The SQL query retrieves accident data for a specific city in a given
+                                state selected by the user over a specified time frame from 2016 through 2020.</p>
                             <p class="flow-text">
-                                This subquery is joined with the accident, trafficdetails, locationdetails and state
-                                tables to ensure the necessary info is available. Then all of this is wrapped up in a
-                                subquery
-                                titled “IQ”.
+                                It calculates the average severity of accidents, the count of accidents, and the count
+                                of available traffic details in the city for each month and year. Additionally, it joins
+                                this data with driver population information to compute the accident rate per 1,000
+                                drivers.
                             </p>
-                            <p class="flow-text">The purpose of this is to join IQ with the driverpopulation table so
-                                that
-                                we
-                                could
-                                determine the accident count divided by the driver population to determine the accident
-                                rate. We
-                                multiplied the accident rate times 10,000 to make it easier to read. We would expect the
-                                accident rate to go down when the traffic details count goes up.</p>
+                            <p class="flow-text">The query involves several tables, including Accident, TrafficDetails,
+                                LocationDetails, State, and DriverPopulation, to gather comprehensive information for
+                                analysis.</p>
                     </div>
                     <div id="modal1-value">
                         <h4 class="modal-info">Value To The Customer</h2>
-                            <p class="flow-text">Customers will value how our software uses traffic details like
-                                speedbumps
-                                and railroad crossings to predict accident rates, helping them understand how
-                                infrastructural changes affect safety. This insight can guide decisions on urban
-                                planning
-                                and road design to improve driver safety.</p>
+                            <p class="flow-text">This query offers valuable insights into the relationship between
+                                traffic details, such as speed bumps, roundabouts, and railway crossings, and the
+                                occurrence and severity of accidents in a City and State. By analyzing the accident rate
+                                per 1,000 drivers alongside the availability of traffic details, stakeholders can
+                                understand how different infrastructure elements impact road safety. This information
+                                enables informed decision-making regarding traffic management, infrastructure
+                                improvements, and resource allocation to enhance public safety and reduce accident rates
+                                in the city.</p>
+                    </div>
+                    <div id="modal1-value-trend">
+                        <h4 class="modal-info">Trends and Interpretations</h2>
+                            <p class="flow-text">The query aims to uncover trends and correlations between traffic
+                                details and accident rates. It hypothesizes that as the count of available traffic
+                                details increases, the accident rate per 1,000 drivers may decrease, indicating
+                                potentially safer road conditions. Conversely, a lower count of traffic details might
+                                correlate with a higher accident rate, suggesting areas for targeted infrastructure
+                                improvements or traffic control measures.
+                            </p>
+                            <p class="flow-text">
+                                By analyzing the results over different time periods, stakeholders can identify patterns
+                                and trends in accident rates and severity, enabling proactive measures to address safety
+                                concerns. For example, if the accident rate decreases after the installation of new
+                                traffic calming measures or signal improvements, it validates the effectiveness of these
+                                interventions in enhancing road safety. Conversely, if accident rates remain high
+                                despite existing traffic infrastructure, it may signal the need for further
+                                investigation or additional safety measures.
+
+                            </p>
+                            <p class="flow-text">Overall, this query provides actionable insights into the effectiveness
+                                of traffic management strategies and infrastructure investments in mitigating road
+                                accidents and improving overall road safety in different cities.
+                            </p>
                     </div>
 
                 </div>
@@ -79,6 +97,9 @@
             </div>
             <div id="modal1-visual" class="modal">
                 <div class="modal-content">
+                    <div class="flex justify-center">
+                        <h5>Query 1</h5>
+                    </div>
                     <div class="flex justify-center">
                         <h5 id="modal1-visual-info"></h5>
                     </div>
@@ -99,10 +120,13 @@
                 <div class="modal-content">
                     <div id="modal2-about">
                         <h4 class="modal-info">About The Query</h2>
-                            <p class="flow-text">This query aims to determine the effect on Covid19 and traffic
-                                accidents.
-                                Our first inner subquery “beforelockdown” determines the number of accidents in 2019
-                                which is the year before covid. </p>
+                            <p class="flow-text">This SQL query retrieves accident data for a specific month and state
+                                during a particular time frame (from March 12, 2020, to August 31, 2020). It calculates
+                                various metrics such as the number of trips, the percentage of the population staying at
+                                home, and the accident rate per 1,000 drivers for each day with available data. The
+                                query involves joining tables related to accident data, COVID-19 trip statistics, state
+                                information, and driver population to provide comprehensive insights into road safety
+                                during the specified period in the selected state. </p>
 
                             <p class="flow-text">It is wrapped into the subquery “acc_covid.” Acc_covid
                                 gathers all of the accident data from various tables by day. This is then merged with
@@ -116,9 +140,32 @@
                     </div>
                     <div id="modal2-value">
                         <h4 class="modal-info">Value To The Customer</h2>
-                            <p class="flow-text">By analyzing the impact of COVID-19 on traffic accidents, our software
-                                enables users to identify patterns in mobility and safety during unusual events, aiding
-                                in more effective emergency response and policy-making during crises.</p>
+                            <p class="flow-text">This query offers valuable insights into the relationship between
+                                COVID-19-related mobility patterns, population behavior, and road accidents in the
+                                selected state
+                                during the early months of the pandemic. By analyzing accident rates alongside trip data
+                                and population mobility trends, stakeholders can understand how changes in mobility
+                                patterns and stay-at-home behaviors influenced road safety during the pandemic. This
+                                information enables informed decision-making regarding public health measures,
+                                transportation policies, and emergency response strategies to mitigate the impact of the
+                                pandemic on road safety.</p>
+                    </div>
+                    <div id="modal2-trends">
+                        <h4 class="modal-info">Trends and Intrepretation</h2>
+                            <p class="flow-text">The query aims to uncover trends and correlations between
+                                COVID-19-related mobility patterns and road accidents in the selected state during March
+                                2020. It
+                                hypothesizes that changes in population mobility, such as increased stay-at-home
+                                behavior or reduced travel due to lockdown measures, may have influenced road safety
+                                outcomes during this period.</p>
+                            <p class="flow-text">By analyzing the results, stakeholders can identify correlations
+                                between changes in mobility patterns, population behavior, and accident rates. For
+                                example, if the accident rate decreased during periods of higher stay-at-home
+                                percentages or reduced mobility, it suggests that public health measures such as
+                                lockdowns may have contributed to improved road safety by reducing traffic volume and
+                                congestion. Conversely, if accident rates remained stable or increased despite changes
+                                in mobility patterns, it may indicate other contributing factors such as changes in
+                                driver behavior, road conditions, or enforcement activities.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -127,6 +174,9 @@
             </div>
             <div id="modal2-visual" class="modal">
                 <div class="modal-content">
+                    <div class="flex justify-center">
+                        <h5>Query 2</h5>
+                    </div>
                     <div class="flex justify-center">
                         <h5 id="modal2-visual-info"></h5>
                     </div>
@@ -147,27 +197,47 @@
                 <div class="modal-content">
                     <div id="modal3-about">
                         <h4 class="modal-info">About The Query</h2>
-                            <p class="flow-text">In this query we examine the effect of unemployment rate
-                                and accident rates. We create two primary subqueries, acc_unemp and
-                                qualrows.</p>
+                            <p class="flow-text">This SQL query focuses on analyzing the relationship between
+                                unemployment rates and road accidents in different states, specifically targeting states
+                                where the unemployment rate exceeds a certain threshold. </p>
 
-                            <p class="flow-text">Both subqueries join the appropriate tables and find
-                                the
-                                state, month, year, unemployment rate and accident count. What differs
-                                is that qualrows also has the dynamic queries so it has only the rows
-                                that meets our criteria.
+                            <p class="flow-text">The query
+                                retrieves accident data along with corresponding unemployment rates for each month and
+                                year, grouped by state. By joining tables related to accident data, unemployment
+                                statistics, state information, and driver population, the query aims to provide insights
+                                into how changes in unemployment rates may affect road safety outcomes..
                             </p>
 
-                            <p class="flow-text">We finally output the data in acc_unemp that
-                                either is the same month/year as qualrows or the month before. This
-                                allows us to see the rows with the necessary unemployment rate and the
-                                month before so that we can compare.</p>
                     </div>
                     <div id="modal3-value">
                         <h4 class="modal-info">Value To The Customer</h2>
-                            <p class="flow-text">This tool provides crucial data linking unemployment rates to accident
-                                rates, empowering customers to better forecast risk and implement targeted interventions
-                                in regions experiencing economic downturns.</p>
+                            <p class="flow-text">This query offers valuable insights into the potential impact of
+                                unemployment rates on road safety in various states. By analyzing accident rates
+                                alongside unemployment data, stakeholders can understand the socioeconomic factors
+                                influencing road safety and identify potential areas for intervention or policy
+                                development. This information enables informed decision-making regarding targeted
+                                interventions, public safety campaigns, and resource allocation to address road safety
+                                challenges in states experiencing higher unemployment rates.</p>
+                    </div>
+                    <div id="modal3-trends">
+                        <h4 class="modal-info">Trends and Interpretation</h2>
+                            <p class="flow-text">The query aims to uncover trends and correlations between unemployment
+                                rates and road accidents in states where the unemployment rate exceeds a threshold. It
+                                hypothesizes that higher unemployment rates may correlate with changes in driver
+                                behavior, economic conditions, and traffic patterns, which could influence road safety
+                                outcomes.</p>
+                            <p class="flow-text">By analyzing the results, stakeholders can identify correlations
+                                between changes in unemployment rates and accident rates over time. For example, if the
+                                accident rate increases following periods of rising unemployment, it suggests that
+                                economic hardship may contribute to road safety challenges such as increased stress,
+                                distraction, or risky driving behaviors. Conversely, if the accident rate decreases
+                                during periods of declining unemployment, it may indicate improved economic conditions
+                                leading to safer road environments.</p>
+                            <p class="flow-text">Overall, this query provides valuable insights into the complex
+                                relationship between socioeconomic factors, such as unemployment rates, and road safety
+                                outcomes in different states. It helps stakeholders understand the multifaceted nature
+                                of road safety challenges and informs strategies to address these challenges within the
+                                context of broader economic trends and social dynamics.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -176,6 +246,9 @@
             </div>
             <div id="modal3-visual" class="modal">
                 <div class="modal-content">
+                    <div class="flex justify-center">
+                        <h5>Query 3</h5>
+                    </div>
                     <div class="flex justify-center">
                         <h5 id="modal3-visual-info"></h5>
                     </div>
@@ -196,17 +269,47 @@
                 <div class="modal-content">
                     <div id="modal4-about">
                         <h4 class="modal-info">About The Query</h2>
-                            <p class="flow-text">In Query 4 we examine the effect of CPI on accident rates. Our subquery
-                                acc_cpi joins all the necessary tables and contains dynamic queries so that we get all
-                                of the necessary info. It is a subquery so that it may have its accident count divided
-                                by driverpopulation so that we may determine accident rates.
+                            <p class="flow-text">This query focuses on analyzing the relationship between Consumer
+                                Price Index (CPI) and road accidents in a specific region selected by the User. It
+                                retrieves accident data along with corresponding CPI values for each month and year,
+                                grouped by region.</p>
+                            <p class="flow-text">Additionally, it calculates the accident rate per 1,000 drivers for
+                                each month, considering the population data obtained from the driver population table.
+                                By joining tables related to accident data, CPI statistics, region information, and
+                                driver population, the query aims to provide insights into how economic indicators may
+                                influence road safety outcomes in that region.</p>
                             </p>
                     </div>
                     <div id="modal4-value">
                         <h4 class="modal-info">Value To The Customer</h2>
-                            <p class="flow-text">Customers can use the correlation between the Consumer Price Index
-                                (CPI) and accident rates to adjust insurance premiums or allocate resources more
-                                efficiently, improving financial outcomes and road safety.</p>
+                            <p class="flow-text">This query offers valuable insights into the potential impact of CPI
+                                fluctuations on road safety within the specified region. By analyzing accident rates
+                                alongside CPI data, stakeholders can understand how economic factors may influence
+                                driver behavior, road conditions, and traffic patterns, thus affecting road safety
+                                outcomes. This information enables informed decision-making regarding economic policies,
+                                transportation infrastructure investments, and public safety initiatives to address road
+                                safety challenges within the context of broader economic trends.</p>
+                    </div>
+                    <div id="modal4-trends">
+                        <h4 class="modal-info">Trends and Interpretation</h2>
+                            <p class="flow-text">The query aims to uncover trends and correlations between CPI values
+                                and
+                                road accidents in the specified region over time. It hypothesizes that changes in CPI
+                                may reflect shifts in consumer spending, inflation rates, and overall economic activity,
+                                which could impact road safety through various channels such as changes in vehicle
+                                usage, maintenance, and travel behaviors.</p>
+                            <p class="flow-text">By analyzing the results, stakeholders can identify correlations
+                                between CPI fluctuations and accident rates. For example, if the accident rate increases
+                                during periods of high CPI, it may indicate economic stressors contributing to road
+                                safety challenges such as reduced maintenance, increased congestion, or changes in
+                                driving habits due to financial constraints. Conversely, if the accident rate decreases
+                                during periods of low CPI, it may suggest improved economic conditions leading to safer
+                                road environments and reduced accident risks.</p>
+                            <p class="flow-text">Overall, this query provides valuable insights into the complex
+                                relationship between economic indicators, such as CPI, and road safety outcomes in the
+                                selected region. It helps stakeholders understand the interconnected nature of economic
+                                factors and road safety and informs strategies to address road safety challenges within
+                                the context of broader economic trends and regional dynamics.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -215,6 +318,9 @@
             </div>
             <div id="modal4-visual" class="modal">
                 <div class="modal-content">
+                    <div class="flex justify-center">
+                        <h5>Query 4</h5>
+                    </div>
                     <div class="flex justify-center">
                         <h5 id="modal4-visual-info"></h5>
                     </div>
@@ -235,17 +341,48 @@
                 <div class="modal-content">
                     <div id="modal5-about">
                         <h4 class="modal-info">About The Query</h2>
-                            <p class="flow-text">This query looks to examine road conditions (acceptable road
-                                percentage) and accident rates. Our subquery acc_rc gathers all of the relevant info and
-                                sorts it based on the dynamic queries. Furthermore, it allows a comparison between two
-                                states the user is able to select them.</p>
+                            <p class="flow-text">This SQL query focuses on analyzing the relationship between road
+                                conditions and road accidents in two specific states selected by the user. It retrieves
+                                accident data along with corresponding road condition statistics for each year, grouped
+                                by state. Additionally, it calculates the accident rate per 1,000 drivers for each
+                                state, considering the population data obtained from the driver population table. By
+                                joining tables related to accident data, road conditions, state information, and driver
+                                population, the query aims to provide insights into how road conditions may influence
+                                road safety outcomes in the two states</p>
 
                     </div>
                     <div id="modal5-value">
                         <h4 class="modal-info">Value To The Customer</h2>
-                            <p class="flow-text">By examining the relationship between road conditions and accident
-                                rates on a yearly basis, our software offers valuable insights for long-term safety
-                                improvements and infrastructure investment strategies.</p>
+                            <p class="flow-text">This query offers valuable insights into the potential impact of road
+                                conditions on road safety in the states. By analyzing accident rates alongside road
+                                condition data, stakeholders can understand how variations in road conditions may affect
+                                accident rates and severity in different states. This information enables informed
+                                decision-making regarding infrastructure investments, maintenance priorities, and road
+                                safety initiatives to address road condition-related challenges and improve road safety
+                                outcomes.
+                            </p>
+                    </div>
+                    <div id="modal5-trends">
+                        <h4 class="modal-info">Trends and Interpretation</h2>
+                            <p class="flow-text">The query aims to uncover trends and correlations between road
+                                conditions and road accidents in the states over time. It hypothesizes that poor road
+                                conditions, characterized by a lower percentage of acceptable miles, may contribute to
+                                increased accident rates due to factors such as reduced traction, visibility, and
+                                control for drivers.</p>
+                            <p class="flow-text">By analyzing the results, stakeholders can identify correlations
+                                between road condition statistics and accident rates in the states. For example, if the
+                                accident rate is higher in states with lower percentages of acceptable miles, it may
+                                indicate the need for targeted infrastructure improvements and maintenance efforts to
+                                address hazardous road conditions and enhance road safety. Conversely, if the accident
+                                rate is lower in states with higher percentages of acceptable miles, it validates the
+                                effectiveness of road maintenance and infrastructure investments in promoting safer road
+                                environments.
+                            </p>
+                            <p class="flow-text">Overall, this query provides valuable insights into the relationship
+                                between road conditions and road safety outcomes in the states. It helps stakeholders
+                                understand the importance of road maintenance and infrastructure investments in
+                                mitigating road safety risks and improving overall road conditions for drivers and road
+                                users.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -255,8 +392,12 @@
             <div id="modal5-visual" class="modal">
                 <div class="modal-content">
                     <div class="flex justify-center">
+                        <h5>Query 5</h5>
+                    </div>
+                    <div class="flex justify-center">
                         <h5 id="modal5-visual-info"></h5>
                     </div>
+
                     <div class="visual">
                         <canvas id="myChart-5" width="700" height="600"
                             style="max-height: 600px; max-width:800px"></canvas>
@@ -274,7 +415,10 @@
             <!-- query content -->
             <div id="query-1" class="col s12">
                 <div class="row">
-                    <div class="col s7">
+                    <div class="flex justify-center">
+                        <h4 class="queryTitle">Impact of Traffic Details on Accident Rates</h4>
+                    </div>
+                    <div class="col s6">
                         <div class="card m-auto mt-1 w-100">
 
                             <form id="dataForm-1">
@@ -299,7 +443,7 @@
                         </div>
                         </form>
                     </div>
-                    <div class="col s5">
+                    <div class="col s6">
                         <div class="card overflow-y-hidden ">
                             <div id="time-1" class="block pl-1 time">
                                 Results:
@@ -378,7 +522,10 @@
             <!-- query 2 -->
             <div id="query-2" class="col s12">
                 <div class="row">
-                    <div class="col s7">
+                    <div class="flex justify-center">
+                        <h4 class="queryTitle">Road Safety and Mobility Patterns during COVID-19 Lockdown</h4>
+                    </div>
+                    <div class="col s6">
                         <div class="card m-auto mt-1 w-100">
 
                             <form id="dataForm-2">
@@ -403,7 +550,7 @@
                         </div>
                         </form>
                     </div>
-                    <div class="col s5">
+                    <div class="col s6">
                         <div class="card overflow-y-hidden ">
                             <div id="time-2" class="block pl-1 time">
                                 Results:
@@ -493,7 +640,10 @@
             <!-- query 3 -->
             <div id="query-3" class="col s12">
                 <div class="row">
-                    <div class="col s7">
+                    <div class="flex justify-center">
+                        <h4 class="queryTitle">Relationship Between Unemployment Rates and Road Accidents</h4>
+                    </div>
+                    <div class="col s6">
                         <div class="card m-auto mt-1 w-100">
 
                             <form id="dataForm-3">
@@ -518,7 +668,7 @@
                         </div>
                         </form>
                     </div>
-                    <div class="col s5">
+                    <div class="col s6">
                         <div class="card overflow-y-hidden ">
                             <div id="time-3" class="block pl-1 time">
                                 Results:
@@ -598,7 +748,10 @@
             <!-- query 4 -->
             <div id="query-4" class="col s12">
                 <div class="row">
-                    <div class="col s7">
+                    <div class="flex justify-center">
+                        <h4 class="queryTitle">Accident Rates in Relation to Consumer Price Index Per Regions</h4>
+                    </div>
+                    <div class="col s6">
                         <div class="card m-auto mt-1 w-100">
 
                             <form id="dataForm-4">
@@ -623,7 +776,7 @@
                         </div>
                         </form>
                     </div>
-                    <div class="col s5">
+                    <div class="col s6">
                         <div class="card overflow-y-hidden ">
                             <div id="time-4" class="block pl-1 time">
                                 Results:
@@ -651,7 +804,11 @@
             <!-- query 5 -->
             <div id="query-5" class="col s12">
                 <div class="row">
-                    <div class="col s7">
+                    <div class="flex justify-center">
+                        <h4 class="queryTitle">Assessing Accident Rates in Relation to Road Conditions and Driver
+                            Population Between States</h4>
+                    </div>
+                    <div class="col s6">
                         <div class="card m-auto mt-1 w-100">
 
                             <form id="dataForm-5">
@@ -676,7 +833,7 @@
                         </div>
                         </form>
                     </div>
-                    <div class="col s5">
+                    <div class="col s6">
                         <div class="card overflow-y-hidden ">
                             <div id="time-5" class="block pl-1 time">
                                 Results:
@@ -803,7 +960,50 @@
                     <label>Select a State</label>
                 </div>
             </div>
+            <!-- query 6 -->
+            <div id="query-6" class="col s12">
+                <div class="row">
+                    <div class="flex justify-center">
+                        <h4 class="queryTitle">Enter Custom SQL Query</h4>
+                    </div>
+                    <div class="col s6">
+                        <div class="card m-auto mt-1 w-100">
 
+                            <form id="dataForm-6">
+                                <textarea class="materialize-textarea" type="text" id="queryInput-6"
+                                    placeholder="Enter an oracle sql query">Select Count(*) from "THOMAS.MARTIN".Accident</textarea>
+                                <div class="flex button-container">
+                                    <div class="col s4">
+
+                                    </div>
+                                    <div class="col s4"> <button class="btn" type="submit">Run Query</button></div>
+                                    <div class="col s4">
+
+                                    </div>
+                                </div>
+
+                                <div class="flex">
+                                    <div id="queryLoader-6" class="progress m-0 none">
+                                        <div class="indeterminate indigo darken-3"></div>
+                                    </div>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="col s6">
+                        <div class="card overflow-y-hidden ">
+                            <div id="time-6" class="block pl-1 time">
+                                Results:
+                            </div>
+                            <ul id="response-6" class="result-list mh-550">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+
+            </div>
         </div>
 
         <script src="scripts/scripts.js" type="module"></script>
