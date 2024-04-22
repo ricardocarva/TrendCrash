@@ -8,7 +8,19 @@ import {
     highlightKeywords,
 } from "./queries.js";
 
-let myChart = null;
+// manage the charts
+let myChart1 = null;
+let myChart2 = null;
+let myChart3 = null;
+let myChart4 = null;
+let myChart5 = null;
+
+// flag is query has been run or not
+let query1Ran = false;
+let query2Ran = false;
+let query3Ran = false;
+let query4Ran = false;
+let query5Ran = false;
 
 // submits a query, takes an element
 const querySubmitHandler = async (element) => {
@@ -82,7 +94,16 @@ const querySubmitHandler = async (element) => {
                 default:
                     break;
             }
-            // If there's an existing chart instance, destroy it
+            M.toast({
+                html: "Visualization Ready!",
+                displayLength: 2000, // Duration in milliseconds (4000 is the default)
+                inDuration: 300, // Transition in duration
+                outDuration: 375, // Transition out duration
+                classes: "green-toast rounded", // Additional classes for customization
+                completeCallback: function () {
+                    console.log("Toast dismissed.");
+                }, // Callback function when toast is dismissed
+            });
         } else {
             timeDiv.innerText = data.message;
         }
@@ -93,49 +114,68 @@ const querySubmitHandler = async (element) => {
     }
 };
 
+// colors for graphs
+const colors = [
+    "rgba(255, 99, 132)", // Red
+    "rgba(54, 162, 235)", // Blue
+    "rgba(255, 206, 86)", // Yellow
+    "rgba(153, 102, 255)", // Purple
+    "rgba(32, 178, 170)", // Light Sea Green
+    "rgba(210, 105, 30)", // Chocolate
+    "rgba(255, 159, 64)", // Orange
+    "rgba(75, 192, 192)", // Green
+    "rgba(255, 99, 71)", // Tomato
+    "rgba(60, 179, 113)", // Medium Sea Green
+    "rgba(32, 178, 170)", // Light Sea Green
+    "rgba(70, 130, 180)", // Steel Blue
+    "rgba(72, 61, 139)", // Dark Slate Blue
+    "rgba(143, 188, 143)", // Dark Sea Green
+    "rgba(210, 105, 30)", // Chocolate
+    "rgba(188, 143, 143)", // Rosy Brown
+    "rgba(189, 183, 107)", // Dark Khaki
+];
+const colorsAlpha = [
+    "rgba(255, 99, 132, 0.9)", // Red
+    "rgba(54, 162, 235, 0.9)", // Blue
+    "rgba(255, 206, 86, 0.9)", // Yellow
+    "rgba(153, 102, 255, 0.9)", // Purple
+    "rgba(32, 178, 170, 0.9)", // Light Sea Green
+    "rgba(210, 105, 30, 0.9)", // Chocolate
+    "rgba(255, 159, 64, 0.9)", // Orange
+    "rgba(75, 192, 192)", // Green
+    "rgba(255, 99, 71, 0.9)", // Tomato
+    "rgba(60, 179, 113, 0.9)", // Medium Sea Green
+    "rgba(32, 178, 170, 0.9)", // Light Sea Green
+    "rgba(70, 130, 180, 0.9)", // Steel Blue
+    "rgba(72, 61, 139, 0.9)", // Dark Slate Blue
+    "rgba(143, 188, 143, 0.9)", // Dark Sea Green
+    "rgba(210, 105, 30, 0.9)", // Chocolate
+    "rgba(188, 143, 143, 0.9)", // Rosy Brown
+    "rgba(189, 183, 107, 0.9)", // Dark Khaki
+];
+// months labels
+const monthLabels = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+];
+
 const visualizeQuery1 = (data) => {
-    if (myChart) {
-        myChart.destroy();
+    if (myChart1) {
+        myChart1.destroy();
     }
-    const ctx = document.getElementById("myChart").getContext("2d");
+    const ctx = document.getElementById("myChart-1").getContext("2d");
 
     const rawData = data.result;
-
-    const colors = [
-        "rgba(255, 99, 132)", // Red
-        "rgba(54, 162, 235)", // Blue
-        "rgba(255, 206, 86)", // Yellow
-        "rgba(75, 192, 192)", // Green
-        "rgba(153, 102, 255)", // Purple
-        "rgba(255, 159, 64)", // Orange
-        // Add more colors if you have more years
-    ];
-
-    const colorsAlpha = [
-        "rgba(255, 99, 132, 0.5)", // Red
-        "rgba(54, 162, 235, 0.5)", // Blue
-        "rgba(255, 206, 86, 0.5)", // Yellow
-        "rgba(75, 192, 192, 0.5)", // Green
-        "rgba(153, 102, 255, 0.5)", // Purple
-        "rgba(255, 159, 64, 0.5)", // Orange
-        // Add more colors if you have more years
-    ];
-
-    // Months labels
-    const monthLabels = [
-        "01",
-        "02",
-        "03",
-        "04",
-        "05",
-        "06",
-        "07",
-        "08",
-        "09",
-        "10",
-        "11",
-        "12",
-    ];
 
     let dataByYear = {};
 
@@ -158,10 +198,10 @@ const visualizeQuery1 = (data) => {
             data: dataByYear[year],
             fill: true,
             borderColor: colors[i % colors.length],
-            backgroundColor: colors[i % colors.length],
+            backgroundColor: colorsAlpha[i % colorsAlpha.length],
             pointBackgroundColor: "#fff",
-            pointBorderColor: colorsAlpha[i % colorsAlpha.length],
-            tension: 0.4,
+            pointBorderColor: colors[i % colors.length],
+            /* tension: 0.4, */
             pointRadius: 3,
             pointBorderWidth: 3,
         };
@@ -169,7 +209,7 @@ const visualizeQuery1 = (data) => {
 
     // Chart initialization
     // const ctx = document.getElementById('myChart').getContext('2d');
-    myChart = new Chart(ctx, {
+    myChart1 = new Chart(ctx, {
         type: "line",
         data: {
             labels: monthLabels,
@@ -202,8 +242,221 @@ const visualizeQuery1 = (data) => {
     });
 };
 
-const visualizeQuery2 = (data) => {};
-const visualizeQuery3 = (data) => {};
+const visualizeQuery2 = (data) => {
+    if (myChart2) {
+        myChart2.destroy();
+    }
+    const ctx = document.getElementById("myChart-2").getContext("2d");
+
+    const rawData = data.result;
+    console.log(data.result);
+
+    // You would modify this processing part based on the actual structure of your rawData
+    const labels = rawData.map((item) => item[1].substring(0, 10)); // Accident date is at index 1
+    const number_of_trips_2020 = rawData.map((item) => Number(item[2])); // Number of trips in 2020 is at index 2
+    const perc_pop_at_home = rawData.map((item) => Number(item[3])); // Percent population at home is at index 3
+    const accident_rate = rawData.map((item) => Number(item[4])); // Accident rate (times 1,000) is at index 4
+    const number_of_trips_2019 = rawData.map((item) => Number(item[5])); // 2019 number of trips is at index 5
+
+    console.log(labels);
+    console.log(number_of_trips_2019);
+    // Chart initialization
+    myChart2 = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Number of Trips 2020",
+                    data: number_of_trips_2020,
+                    borderColor: colors[0 % colors.length],
+                    backgroundColor: "#fff",
+                    pointRadius: 2,
+                    pointBorderWidth: 2,
+                    yAxisID: "y-axis-trips",
+                },
+                {
+                    label: "Number of Trips 2019",
+                    data: number_of_trips_2019,
+                    borderColor: colors[1 % colors.length],
+                    backgroundColor: "#fff",
+                    pointRadius: 2,
+                    pointBorderWidth: 2,
+                    yAxisID: "y-axis-trips",
+                },
+                {
+                    label: "Percentage Population at Home",
+                    data: perc_pop_at_home,
+                    borderColor: colors[2 % colors.length],
+                    backgroundColor: "#fff",
+                    pointRadius: 2,
+                    pointBorderWidth: 2,
+                    yAxisID: "y-axis-percent",
+                },
+                {
+                    label: "Accident Rate",
+                    data: accident_rate,
+                    borderColor: colors[3 % colors.length],
+                    backgroundColor: "#fff",
+                    pointRadius: 2,
+                    pointBorderWidth: 2,
+                    yAxisID: "y-axis-percent",
+                },
+            ],
+        },
+        options: {
+            scales: {
+                "y-axis-trips": {
+                    type: "linear",
+                    display: true,
+                    position: "left",
+                    title: {
+                        display: true,
+                        text: "Number of Trips",
+                    },
+                },
+                "y-axis-percent": {
+                    type: "linear",
+                    display: true,
+                    position: "right",
+                    title: {
+                        display: true,
+                        text: "Percentage / Rate",
+                    },
+                    // assuming perc_pop_at_home and accident_rate are percentages
+                    suggestedMin: 0,
+                    suggestedMax: 100,
+                },
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let label = context.dataset.label || "";
+                            if (label) {
+                                label += ": ";
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y;
+                                if (
+                                    context.dataset.yAxisID === "y-axis-percent"
+                                ) {
+                                    label += "%";
+                                }
+                            }
+                            return label;
+                        },
+                    },
+                },
+                legend: {
+                    display: true,
+                    position: "top",
+                },
+            },
+        },
+    });
+};
+const visualizeQuery3 = (data) => {
+    if (myChart3) {
+        myChart3.destroy();
+    }
+    const ctx = document.getElementById("myChart-3").getContext("2d");
+
+    const rawData = data.result; // Replace this with your actual data source
+
+    // Prepare the data structure
+    const labels = [];
+    const unemploymentRates = [];
+    const accidentRates = [];
+
+    // Process rawData to fill the data structure
+    rawData.forEach((item) => {
+        const date = `${item[1]}/${item[2]}`;
+        const unemploymentRate = item[3];
+        const accidentRate = item[4];
+
+        labels.push(date);
+        unemploymentRates.push(unemploymentRate);
+        accidentRates.push(accidentRate);
+    });
+
+    // Chart initialization
+    myChart3 = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Unemployment Rate",
+                    data: unemploymentRates,
+                    borderColor: colors[0 % colors.length],
+                    backgroundColor: "#fff",
+                    /*   pointBackgroundColor: "#fff",
+                    pointBorderColor: colorsAlpha[0 % colorsAlpha.length], */
+                    /*     tension: 0.4, */
+                    pointRadius: 3,
+                    pointBorderWidth: 3,
+                    yAxisID: "y", // Assign to the first Y axis
+                },
+                {
+                    label: "Accident Rate",
+                    data: accidentRates,
+                    borderColor: colors[1 % colors.length],
+                    backgroundColor: "#fff",
+                    /* pointBackgroundColor: "#fff",
+                    pointBorderColor: colorsAlpha[1 % colorsAlpha.length], */
+                    /*   tension: 0.4, */
+                    pointRadius: 3,
+                    pointBorderWidth: 3,
+                    yAxisID: "y", // Assign to the second Y axis
+                },
+            ],
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: "Time",
+                    },
+                },
+                y: {
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: "Rate",
+                    },
+                },
+                /*    y1: {
+                    beginAtZero: false,
+                    position: "right",
+                    title: {
+                        display: true,
+                        text: "Unemployment Rate (%)",
+                    },
+                    grid: {
+                        drawOnChartArea: false, // Only show the grid for this axis
+                    },
+                }, */
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: "top",
+                },
+                tooltip: {
+                    mode: "index",
+                    intersect: false,
+                },
+            },
+            interaction: {
+                mode: "nearest",
+                axis: "x",
+                intersect: false,
+            },
+        },
+    });
+};
 const visualizeQuery4 = (data) => {};
 const visualizeQuery5 = (data) => {};
 
@@ -282,11 +535,12 @@ document.addEventListener("DOMContentLoaded", () => {
     var minstances = M.Modal.init(elems);
     var elems = document.querySelectorAll(".collapsible");
     var cinstances = M.Collapsible.init(elems);
+
     //var elems = document.querySelectorAll(".collapsible");
     //M.UpdateTextFields();
 
     queryManager.setQuery(1, "FL", "Orlando");
-    queryManager.setQuery(2, "FL");
+    queryManager.setQuery(2, "FL", 3);
     queryManager.setQuery(3, "FL", 4.3);
     queryManager.setQuery(4, "FL");
     queryManager.setQuery(5, "FL", "GA");
@@ -339,20 +593,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // event listeners for query 2
     document.getElementById("states-2").addEventListener("change", (e) => {
-        queryManager.setQuery(2, e.target.value);
+        const month = document.getElementById("months-2").value || 3;
+        queryManager.setQuery(2, e.target.value, Number(month));
+        document.getElementById("queryInput-2").innerHTML =
+            queryManager.getQueryHTML(2);
+    });
+
+    document.getElementById("months-2").addEventListener("change", (e) => {
+        const state = document.getElementById("states-2").value || "FL";
+        queryManager.setQuery(2, state, Number(e.target.value));
         document.getElementById("queryInput-2").innerHTML =
             queryManager.getQueryHTML(2);
     });
 
     // event listeners for query 3
     document.getElementById("states-3").addEventListener("change", (e) => {
-        queryManager.setQuery(3, e.target.value);
+        const rate = document.getElementById("rate-3").value || 4;
+        queryManager.setQuery(3, e.target.value, rate);
         document.getElementById("queryInput-3").innerHTML =
             queryManager.getQueryHTML(3);
     });
 
     document.getElementById("rate-3").addEventListener("change", (e) => {
-        const state = document.getElementById("states-3").value;
+        const state = document.getElementById("states-3").value || "FL";
         queryManager.setQuery(3, state, e.target.value);
         document.getElementById("queryInput-3").innerHTML =
             queryManager.getQueryHTML(3);

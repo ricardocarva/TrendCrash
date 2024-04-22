@@ -21,22 +21,6 @@
 
 
     <div class="flex">
-        <!DOCTYPE html>
-        <html lang="en">
-
-        <head>
-            <meta charset="UTF-8">
-            <title>Chart Example</title>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        </head>
-
-        <body>
-
-        </body>
-
-        </html>
-
-
         <div class="row w-60 max-w-60">
             <div class="col s12">
                 <ul class="tabs flex">
@@ -100,8 +84,8 @@
                         <li class="tab col s6"><a href="#modal1-value">Value</a></li>
                     </ul> -->
                     <div class="visual">
-                        <canvas id="myChart" width="400" height="400"
-                            style="max-height: 500px; max-width:500px;"></canvas>
+                        <canvas id="myChart-1" width="800" height="600"
+                            style="max-height: 600px; max-width:800px"></canvas>
                         <script>
 
                         </script>
@@ -142,6 +126,26 @@
                     <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
                 </div>
             </div>
+            <div id="modal2-visual" class="modal">
+                <div class="modal-content">
+                    <!-- <ul class="tabs flex">
+                        <li class="tab col s6"><a class="active" href="#modal1-about">About</a></li>
+                        <li class="tab col s6"><a href="#modal1-value">Value</a></li>
+                    </ul> -->
+                    <div class="visual">
+                        <canvas id="myChart-2" width="800" height="600"
+                            style="max-height: 600px; max-width:800px;"></canvas>
+                        <script>
+
+                        </script>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+            </div>
+
 
             <div id="modal3" class="modal">
                 <div class="modal-content">
@@ -169,6 +173,25 @@
                                 rates, empowering customers to better forecast risk and implement targeted interventions
                                 in regions experiencing economic downturns.</p>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+            </div>
+            <div id="modal3-visual" class="modal">
+                <div class="modal-content">
+                    <!-- <ul class="tabs flex">
+                        <li class="tab col s6"><a class="active" href="#modal1-about">About</a></li>
+                        <li class="tab col s6"><a href="#modal1-value">Value</a></li>
+                    </ul> -->
+                    <div class="visual">
+                        <canvas id="myChart-3" width="700" height="600"
+                            style="max-height: 600px; max-width:800px"></canvas>
+                        <script>
+
+                        </script>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
@@ -323,8 +346,8 @@
                     <label>Select a State</label>
                 </div>
                 <div class="input-field col s4">
-                    <input id="city-1" placeholder="City Name" type="text">
-                    <label for="first_name">City</label>
+                    <input id="city-1" placeholder="City Name" type="text" value="Orlando">
+                    <label for="first_name">City (enter the of a city in selected state)</label>
                 </div>
             </div>
 
@@ -337,11 +360,15 @@
                             <form id="dataForm-2">
                                 <pre><code class="sql" id="queryInput-2"></code></pre>
                                 <div class="flex button-container">
-                                    <div class="col s5">
+                                    <div class="col s4">
                                         <a class="waves-effect waves-light btn modal-trigger" href="#modal2"><i
                                                 class="large material-icons">info_outline</i></a>
                                     </div>
-                                    <div class="col s5"> <button class="btn" type="submit">Run Query</button></div>
+                                    <div class="col s4"> <button class="btn" type="submit">Run Query</button></div>
+                                    <div class="col s4">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#modal2-visual"><i
+                                                class="large material-icons">remove_red_eye</i></a>
+                                    </div>
                                 </div>
 
                                 <div class="flex">
@@ -423,6 +450,19 @@
                     <label>Select a State</label>
 
                 </div>
+                <div class="input-field col s4 ">
+                    <select id="months-2" name="months-2" class="indigo darken-3">
+                        <option value="">Select a month</option>
+                        <option value=3 selected>March</option>
+                        <option value=4>April</option>
+                        <option value=5>May</option>
+                        <option value=6>June</option>
+                        <option value=7>July</option>
+                        <option value=8>August</option>
+                    </select>
+                    <label>Select a Month (limited month range is intentional)</label>
+
+                </div>
             </div>
 
             <!-- query 3 -->
@@ -434,11 +474,15 @@
                             <form id="dataForm-3">
                                 <pre><code class="sql" id="queryInput-3"></code></pre>
                                 <div class="flex button-container">
-                                    <div class="col s5">
+                                    <div class="col s4">
                                         <a class="waves-effect waves-light btn modal-trigger" href="#modal3"><i
                                                 class="large material-icons">info_outline</i></a>
                                     </div>
-                                    <div class="col s5"> <button class="btn" type="submit">Run Query</button></div>
+                                    <div class="col s4"> <button class="btn" type="submit">Run Query</button></div>
+                                    <div class="col s4">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#modal3-visual"><i
+                                                class="large material-icons">remove_red_eye</i></a>
+                                    </div>
                                 </div>
 
                                 <div class="flex">
@@ -521,7 +565,7 @@
 
                 </div>
                 <div class="input-field col s4">
-                    <input id="rate-3" type="number" class="validate[custom[number]]">
+                    <input id="rate-3" type="number" class="validate[custom[number]]" value=4.3>
                     <label for="rate-3">Unemployment Rate (enter a number)</label>
                 </div>
             </div>
