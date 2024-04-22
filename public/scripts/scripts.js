@@ -722,27 +722,35 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         querySubmitHandler(e.target);
         const info = document.getElementById("modal1-visual-info");
-        const city = document.getElementById("states-1").value || null;
-        const state = document.getElementById("states-1").value || null;
-        if (city && state) info.innerHTML = `State: ${state}, City: ${city}`;
+        const city = document.getElementById("city-1").value || null;
+        const state = document.getElementById("states-1");
+        const selectedState = state.options[state.selectedIndex].textContent;
+
+        if (city && state)
+            info.innerHTML = `State: ${selectedState}, City: ${city}`;
     });
 
     document.getElementById("dataForm-2").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
         const info = document.getElementById("modal2-visual-info");
-        const state = document.getElementById("states-2").value || null;
-        const month = document.getElementById("months-2").value || null;
-        if (state && month) info.innerHTML = `State: ${state}, Month: ${month}`;
+        const state = document.getElementById("states-2") || null;
+        const selectedState = state.options[state.selectedIndex].textContent;
+        const month = document.getElementById("months-2") || null;
+        const selectedMonth = month.options[month.selectedIndex].textContent;
+        if (state && month)
+            info.innerHTML = `State: ${selectedState}, Month: ${selectedMonth}`;
     });
 
     document.getElementById("dataForm-3").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
         const info = document.getElementById("modal3-visual-info");
-        const state = document.getElementById("states-3").value || null;
+        const state = document.getElementById("states-3") || null;
+        const selectedState = state.options[state.selectedIndex].textContent;
         const rate = document.getElementById("rate-3").value || null;
-        if (state && rate) info.innerHTML = `State: ${state}, Rate: ${rate}`;
+        if (state && rate)
+            info.innerHTML = `State: ${selectedState}, Rate: ${rate}`;
     });
 
     document.getElementById("dataForm-4").addEventListener("submit", (e) => {

@@ -54,7 +54,64 @@ ORDER BY
 };
 
 export const getQuery2 = (state, month) => {
-    return `SELECT 
+    console.log("month: ", month);
+    if (month == 0) {
+        return `SELECT 
+    s.name AS state,
+    accident_date,
+    number_of_trips,
+    perc_pop_at_home,
+    ROUND(accident_count / (d.driverpopulation/365), 10)*1000 AS "Accident_Rate(Times 1,000)",
+    "2019_number_of_trips"
+FROM (
+    SELECT 
+        l.state_id,
+        a.accident_date,
+        c.number_of_trips,
+        ROUND(c.population_staying_at_home / (c.population_staying_at_home + c.population_not_staying_at_home) * 100,2) AS perc_pop_at_home,
+        COUNT(*) AS accident_count,
+        beforeLockdown.number_of_trips AS "2019_number_of_trips"
+    FROM 
+        MSTRENGES.COVIDTRIPSBYDISTANCE c
+        JOIN
+        RCARVALHEIRA.LocationDetails l ON l.state_id = c.state_id
+        JOIN
+        "THOMAS.MARTIN".Accident a ON a.location_id = l.location_id
+        JOIN
+        (SELECT 
+            state_id, 
+            year, 
+            month, 
+            day,
+            number_of_trips
+        FROM MSTRENGES.COVIDTRIPSBYDISTANCE
+        WHERE year = 2019) beforeLockdown ON beforeLockdown.state_id = l.state_id
+    WHERE
+        EXTRACT(YEAR FROM a.accident_date) = c.year AND 
+        EXTRACT(MONTH FROM a.accident_date) = c.month AND
+        EXTRACT(DAY FROM a.accident_date) = c.day AND
+        c.day = beforeLockdown.day AND
+        c.month = beforeLockdown.month AND
+        a.accident_date between ('12-MAR-20')AND ('31-AUG-20')
+    GROUP BY
+        l.state_id, 
+        a.accident_date,
+        c.number_of_trips,
+        c.population_staying_at_home / (c.population_staying_at_home + c.population_not_staying_at_home),
+        beforeLockdown.number_of_trips
+    ) acc_covid
+JOIN
+    MSTRENGES.STATE s ON s.state_id = acc_covid.state_id
+JOIN
+    MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_covid.state_id
+WHERE
+    EXTRACT(YEAR FROM acc_covid.accident_date) = d.year and
+    s.state_id = '${state}'
+ORDER BY
+    s.name ASC,
+    accident_date ASC`;
+    } else {
+        return `SELECT 
     s.name AS state,
     accident_date,
     number_of_trips,
@@ -109,6 +166,7 @@ WHERE
 ORDER BY
     s.name ASC,
     accident_date ASC`;
+    }
 };
 
 export const getQuery3 = (state, rate) => {
@@ -236,7 +294,7 @@ export const getQuery5 = (state1, state2) => {
     s.name,
     acc_rc.year,
     percent_acceptable_miles,
-    ROUND(accident_count / d.driverpopulation, 10)*1000 AS "Accident_Rate(Times 1,000)"
+    ROUND(accident_count / d.driverpopulation, 10) * 1000 AS "Accident_Rate(Times 1,000)"
 FROM( 
     SELECT
         l.state_id,
