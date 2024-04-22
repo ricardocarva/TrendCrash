@@ -106,6 +106,16 @@ const querySubmitHandler = async (element) => {
             });
         } else {
             timeDiv.innerText = data.message;
+            M.toast({
+                html: data.message,
+                displayLength: 2000, // Duration in milliseconds (4000 is the default)
+                inDuration: 300, // Transition in duration
+                outDuration: 375, // Transition out duration
+                classes: "red-toast rounded", // Additional classes for customization
+                completeCallback: function () {
+                    console.log("Toast dismissed.");
+                }, // Callback function when toast is dismissed
+            });
         }
 
         hideLoader(`queryLoader-${queryNumber}`);
@@ -241,7 +251,6 @@ const visualizeQuery1 = (data) => {
         },
     });
 };
-
 const visualizeQuery2 = (data) => {
     if (myChart2) {
         myChart2.destroy();
@@ -457,8 +466,170 @@ const visualizeQuery3 = (data) => {
         },
     });
 };
-const visualizeQuery4 = (data) => {};
-const visualizeQuery5 = (data) => {};
+const visualizeQuery4 = (data) => {
+    if (myChart4) {
+        myChart4.destroy();
+    }
+    const ctx = document.getElementById("myChart-4").getContext("2d");
+
+    const rawData = data.result;
+
+    // Assuming that your data is ordered by year and then by month,
+    // and that your dataset is complete (i.e., there are no missing months)
+    const labels = rawData.map(
+        (item) => `${item[1]}-${String(item[2]).padStart(2, "0")}`
+    ); // "Year-Month" labels
+
+    // CPI and Accident Rate data
+    const cpiData = rawData.map((item) => Number(item[3]));
+    const accidentRateData = rawData.map((item) => Number(item[4]));
+
+    // Chart initialization
+    myChart4 = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "CPI",
+                    data: cpiData,
+                    borderColor: colors[0], // Assuming colors is accessible and has at least two values
+                    backgroundColor: "transparent",
+                    yAxisID: "y-axis-cpi",
+                },
+                {
+                    label: "Accident Rate",
+                    data: accidentRateData,
+                    borderColor: colors[1], // Different color for accident rate
+                    backgroundColor: "transparent",
+                    yAxisID: "y-axis-accident-rate",
+                },
+            ],
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: "Month",
+                    },
+                },
+                "y-axis-cpi": {
+                    type: "linear",
+                    display: true,
+                    position: "left",
+                    title: {
+                        display: true,
+                        text: "CPI",
+                    },
+                },
+                "y-axis-accident-rate": {
+                    type: "linear",
+                    display: true,
+                    position: "right",
+                    title: {
+                        display: true,
+                        text: "Accident Rate (Times 1,000)",
+                    },
+                    grid: {
+                        drawOnChartArea: false, // Only show the grid for this axis
+                    },
+                },
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: "top",
+                },
+            },
+        },
+    });
+};
+const visualizeQuery5 = (data) => {
+    if (myChart5) {
+        myChart5.destroy();
+    }
+    const ctx = document.getElementById("myChart-5").getContext("2d");
+
+    const rawData = data.result;
+    const uniqueStates = [...new Set(rawData.map((item) => item[0]))];
+    const labels = [...new Set(rawData.map((item) => item[1]))]; // Assuming 'YEAR' is at index 1
+
+    const datasets = [];
+
+    uniqueStates.forEach((state, index) => {
+        const stateData = rawData.filter((item) => item[0] === state);
+
+        const percentAcceptableMilesData = stateData.map((item) =>
+            Number(item[2])
+        );
+        const accidentRateData = stateData.map((item) => Number(item[3]));
+
+        datasets.push({
+            label: `${state} Percent Acceptable Miles`,
+            data: percentAcceptableMilesData,
+            borderColor: colors[(index * 2) % colors.length], // Choose color by state index
+            backgroundColor: "transparent",
+            fill: false,
+            yAxisID: "y1", // Assigning to the first y-axis
+        });
+
+        datasets.push({
+            label: `${state} Accident Rate`,
+            data: accidentRateData,
+            borderColor: colors[(index * 2 + 1) % colors.length], // Choose color by state index, offset by 1
+            backgroundColor: "transparent",
+            fill: false,
+            yAxisID: "y2", // Assigning to the second y-axis
+        });
+    });
+
+    // Chart initialization
+    myChart5 = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels.sort(), // Sort labels if necessary
+            datasets: datasets,
+        },
+        options: {
+            scales: {
+                y1: {
+                    // First y-axis
+                    type: "linear",
+                    display: true,
+                    position: "left",
+                    title: {
+                        display: true,
+                        text: "Percent Acceptable Miles",
+                    },
+                },
+                y2: {
+                    // Second y-axis
+                    type: "linear",
+                    display: true,
+                    position: "right",
+                    title: {
+                        display: true,
+                        text: "Accident Rate",
+                    },
+                    // Add additional configuration as needed
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: "Year",
+                    },
+                },
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: "top",
+                },
+            },
+        },
+    });
+};
 
 // store the queries and their html string variant
 const queryManager = {
@@ -542,7 +713,7 @@ document.addEventListener("DOMContentLoaded", () => {
     queryManager.setQuery(1, "FL", "Orlando");
     queryManager.setQuery(2, "FL", 3);
     queryManager.setQuery(3, "FL", 4.3);
-    queryManager.setQuery(4, "FL");
+    queryManager.setQuery(4, "NE");
     queryManager.setQuery(5, "FL", "GA");
     queryManager.renderQueries();
 
@@ -550,26 +721,49 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("dataForm-1").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
+        const info = document.getElementById("modal1-visual-info");
+        const city = document.getElementById("states-1").value || null;
+        const state = document.getElementById("states-1").value || null;
+        if (city && state) info.innerHTML = `State: ${state}, City: ${city}`;
     });
 
     document.getElementById("dataForm-2").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
+        const info = document.getElementById("modal2-visual-info");
+        const state = document.getElementById("states-2").value || null;
+        const month = document.getElementById("months-2").value || null;
+        if (state && month) info.innerHTML = `State: ${state}, Month: ${month}`;
     });
 
     document.getElementById("dataForm-3").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
+        const info = document.getElementById("modal3-visual-info");
+        const state = document.getElementById("states-3").value || null;
+        const rate = document.getElementById("rate-3").value || null;
+        if (state && rate) info.innerHTML = `State: ${state}, Rate: ${rate}`;
     });
 
     document.getElementById("dataForm-4").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
+        const info = document.getElementById("modal4-visual-info");
+        const region = document.getElementById("region-4");
+        const selectedRegion = region.options[region.selectedIndex].textContent;
+        if (selectedRegion) info.innerHTML = `Region: ${selectedRegion}`;
     });
 
     document.getElementById("dataForm-5").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
+        const info = document.getElementById("modal5-visual-info");
+        const state1 = document.getElementById("states-5");
+        const selectedState1 = state1.options[state1.selectedIndex].textContent;
+        const state2 = document.getElementById("states-5-2");
+        const selectedState2 = state2.options[state2.selectedIndex].textContent;
+        if (state1 && state2)
+            info.innerHTML = `State 1: ${selectedState1}, State 2: ${selectedState2}`;
     });
 
     // event listeners for query 1
@@ -622,7 +816,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // event listeners for query 4
-    document.getElementById("states-4").addEventListener("change", (e) => {
+    document.getElementById("region-4").addEventListener("change", (e) => {
         queryManager.setQuery(4, e.target.value);
         document.getElementById("queryInput-4").innerHTML =
             queryManager.getQueryHTML(4);

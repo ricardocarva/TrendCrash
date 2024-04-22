@@ -186,45 +186,49 @@ ORDER BY
     acc_unemp.month_no ASC`;
 };
 
-export const getQuery4 = (state, rate) => {
+export const getQuery4 = (region) => {
     return `SELECT
-    s.name,
-    quarter,
-    acc_cpi.year,
-    price_index,
-    ROUND(accident_count / (d.driverpopulation/4), 10)*1000 AS "Accident_Rate(Times 1,000)"
+    acc_cpi.name, 
+    acc_cpi.month, 
+    acc_cpi.year, 
+    acc_cpi.price_index*100,
+    ROUND(acc_cpi.accident_count / (rpop.pop/12), 10) * 1000 AS "Accident_Rate(Times 1,000)"
 FROM (SELECT 
-        l.state_id, 
-        c.quarter, 
-        c.year, 
-        c.price_index, 
-        count(*) AS accident_count
-    FROM 
-        "THOMAS.MARTIN".Accident a, 
-        RCARVALHEIRA.LocationDetails l, 
-        mstrenges.CPI c
-    WHERE 
-        l.location_ID = a.location_ID and 
-        l.state_id = c.state_id and 
-        EXTRACT(YEAR FROM a.accident_date)=c.year and 
-        TO_CHAR(a.accident_date, 'Q')=c.quarter and 
-        l.state_id='${state}'
-    GROUP BY 
-        l.state_id, 
-        c.quarter, 
-        c.year, 
-        c.price_index
-    ) acc_cpi
+    r.name,
+    c.region_id, 
+    c.month, 
+    c.year, 
+    c.price_index, 
+    count(*) AS accident_count
+FROM 
+    "THOMAS.MARTIN".Accident a
+    JOIN RCARVALHEIRA.LocationDetails l ON l.location_ID=a.location_ID
+    JOIN mstrenges.state s ON s.state_id=l.state_id
+    JOIN mstrenges.region r ON s.region_id=r.region_id
+    JOIN mstrenges.CPI2 c ON c.region_id=r.region_id
+WHERE 
+    EXTRACT(YEAR FROM a.accident_date)=c.year AND 
+    EXTRACT(MONTH FROM a.accident_date)=c.month AND 
+    c.region_id='${region}'
+GROUP BY 
+    r.name,
+    c.region_id, 
+    c.month, 
+    c.year, 
+    c.price_index 
+) acc_cpi
 JOIN
-    MSTRENGES.STATE s ON s.state_id = acc_cpi.state_id
-JOIN
-    MSTRENGES.DRIVERPOPULATION d ON d.state_id = acc_cpi.state_id
-WHERE
-    acc_cpi.year = d.year
+    (SELECT s.region_id, d.year, sum(driverpopulation) AS pop
+        FROM mstrenges.driverpopulation d
+        JOIN mstrenges.state s on d.state_id = s.state_id
+        JOIN mstrenges.region r on r.region_id=s.region_id
+        WHERE s.region_id='${region}'
+        GROUP BY s.region_id, d.year
+    ) rpop on rpop.year=acc_cpi.year and rpop.region_id=acc_cpi.region_id
 ORDER BY 
-    s.name, 
+    acc_cpi.name, 
     acc_cpi.year,
-    quarter ASC`;
+    acc_cpi.month`;
 };
 
 export const getQuery5 = (state1, state2) => {
