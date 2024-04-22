@@ -31,124 +31,7 @@
         </head>
 
         <body>
-            <!--          <canvas id="myChart" width="400" height="400" style="max-height: 500px; max-width:500px;"></canvas>
-            <script>
-                const ctx = document.getElementById('myChart').getContext('2d');
 
-                const rawData = [
-                    "Florida,2016,6,2.26,1178,1.3009739",
-                    "Florida,2016,7,2.29,3282,3.6355311",
-                    "Florida,2016,8,2.27,3741,4.0206717",
-                    "Florida,2016,9,2.31,3518,3.8448644",
-                    "Florida,2016,10,2.29,3176,3.6527029",
-                    "Florida,2016,11,2.31,3699,4.5562706",
-                    "Florida,2016,12,2.31,3151,3.8661248",
-                    "Florida,2017,1,2.29,3074,3.564256",
-                    "Florida,2017,2,2.32,2452,3.1328521",
-                    "Florida,2017,3,2.27,3648,4.4827803",
-                    "Florida,2017,4,2.3,2378,2.9171501",
-                    "Florida,2017,5,2.32,2113,2.5494221",
-                    "Florida,2017,6,2.37,1780,2.2477577",
-                    "Florida,2017,7,2.43,1385,1.9230108",
-                    "Florida,2017,8,2.31,3830,4.1317671",
-                    "Florida,2017,9,2.36,2486,2.9458043",
-                    "Florida,2017,10,2.39,2470,3.2466727",
-                    "Florida,2017,11,2.36,2778,3.5738074",
-                    "Florida,2017,12,2.36,2396,3.2848782",
-                    "Florida,2018,1,2.41,2176,2.9170987",
-                    "Florida,2018,2,2.37,2444,3.062329",
-                    "Florida,2018,3,2.38,2920,3.6291956",
-                    "Florida,2018,4,2.36,2861,3.4847461",
-                    "Florida,2018,5,2.37,2688,3.3769946",
-                    "Florida,2018,6,2.39,2197,2.8202785",
-                    "Florida,2018,7,2.4,2410,2.9928371",
-                    "Florida,2018,8,2.39,3004,3.7556865",
-                    "Florida,2018,9,2.41,2317,3.0264118",
-                    "Florida,2018,10,2.36,3377,4.3022521",
-                    "Florida,2018,11,2.39,2894,3.5924976",
-                    "Florida,2018,12,2.39,2379,3.1583684",
-                    "Florida,2019,1,2.38,2631,3.1332926",
-                    "Florida,2019,2,2.41,1891,2.4924444",
-                    "Florida,2019,3,2.4,2114,2.8618382",
-                    "Florida,2019,4,2.36,2622,3.1325214",
-                    "Florida,2019,5,2.36,2693,3.1649108",
-                    "Florida,2019,6,2.37,2285,2.8016864",
-                    "Florida,2019,7,2.35,2527,3.113242",
-                    "Florida,2019,8,2.35,2408,2.8734059",
-                    "Florida,2019,9,2.36,2304,2.769297",
-                    "Florida,2019,10,2.33,2903,3.4803223",
-                    "Florida,2019,11,2.31,2571,3.1232673",
-                    "Florida,2019,12,2.37,2027,2.4947579",
-                    "Florida,2020,1,2.34,2411,2.9145983",
-                    "Florida,2020,2,2.34,2409,2.8527481",
-                ];
-
-                const colors = [
-                    'rgba(255, 99, 132, 0.5)', // Red
-                    'rgba(54, 162, 235, 0.5)', // Blue
-                    'rgba(255, 206, 86, 0.5)',  // Yellow
-                    'rgba(75, 192, 192, 0.5)',  // Green
-                    'rgba(153, 102, 255, 0.5)', // Purple
-                    'rgba(255, 159, 64, 0.5)',  // Orange
-                    // Add more colors if you have more years
-                ];
-
-                // Months labels
-                const monthLabels = [
-                    '01', '02', '03', '04', '05', '06',
-                    '07', '08', '09', '10', '11', '12'
-                ];
-
-                let dataByYear = {};
-
-                // Process rawData to fit into the data structure
-                rawData.forEach(item => {
-                    const [state, year, month, , , value] = item.split(',');
-                    if (!dataByYear[year]) {
-                        dataByYear[year] = Array(12).fill(null); // Prepare an array of 12 months
-                    }
-                    dataByYear[year][parseInt(month) - 1] = parseFloat(value); // Month index is zero-based
-                });
-
-                // Prepare datasets
-                const datasets = Object.keys(dataByYear).map((year, i) => {
-                    return {
-                        label: year,
-                        data: dataByYear[year],
-                        fill: true,
-                        borderColor: colors[i % colors.length], // Cycle through colors
-                        backgroundColor: colors[i % colors.length], // Use the same color for background
-                        tension: 0.4
-                    };
-                });
-
-                // Chart initialization
-                // const ctx = document.getElementById('myChart').getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: monthLabels,
-                        datasets: datasets
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                title: {
-                                    display: true,
-                                    text: 'Value'
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: true,
-                                position: 'top'
-                            }
-                        }
-                    }
-                });
-            </script> -->
         </body>
 
         </html>
@@ -210,7 +93,25 @@
                     <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
                 </div>
             </div>
+            <div id="modal1-visual" class="modal">
+                <div class="modal-content">
+                    <!-- <ul class="tabs flex">
+                        <li class="tab col s6"><a class="active" href="#modal1-about">About</a></li>
+                        <li class="tab col s6"><a href="#modal1-value">Value</a></li>
+                    </ul> -->
+                    <div class="visual">
+                        <canvas id="myChart" width="400" height="400"
+                            style="max-height: 500px; max-width:500px;"></canvas>
+                        <script>
 
+                        </script>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+            </div>
             <div id="modal2" class="modal">
                 <div class="modal-content">
                     <div id="modal2-about">
@@ -332,11 +233,15 @@
                             <form id="dataForm-1">
                                 <pre><code class="sql" id="queryInput-1"></code></pre>
                                 <div class="flex button-container">
-                                    <div class="col s5">
+                                    <div class="col s4">
                                         <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i
                                                 class="large material-icons">info_outline</i></a>
                                     </div>
-                                    <div class="col s5"> <button class="btn" type="submit">Run Query</button></div>
+                                    <div class="col s4"> <button class="btn" type="submit">Run Query</button></div>
+                                    <div class="col s4">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1-visual"><i
+                                                class="large material-icons">remove_red_eye</i></a>
+                                    </div>
                                 </div>
 
                                 <div class="flex">

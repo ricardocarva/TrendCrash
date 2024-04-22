@@ -8,6 +8,8 @@ import {
     highlightKeywords,
 } from "./queries.js";
 
+let myChart = null;
+
 // submits a query, takes an element
 const querySubmitHandler = async (element) => {
     // get the corresponding query number off the elemt id
@@ -59,6 +61,28 @@ const querySubmitHandler = async (element) => {
             });
 
             timeDiv.innerText = `Results: ${data.execution_time}`;
+            console.log(Number.isInteger(queryNumber));
+            // Handle charts for each visualization
+            switch (queryNumber) {
+                case "1":
+                    visualizeQuery1(data);
+                    break;
+                case "2":
+                    visualizeQuery2(data);
+                    break;
+                case "3":
+                    visualizeQuery3(data);
+                    break;
+                case "4":
+                    visualizeQuery4(data);
+                    break;
+                case "5":
+                    visualizeQuery5(data);
+                    break;
+                default:
+                    break;
+            }
+            // If there's an existing chart instance, destroy it
         } else {
             timeDiv.innerText = data.message;
         }
@@ -68,6 +92,120 @@ const querySubmitHandler = async (element) => {
         console.error("Error:", error);
     }
 };
+
+const visualizeQuery1 = (data) => {
+    if (myChart) {
+        myChart.destroy();
+    }
+    const ctx = document.getElementById("myChart").getContext("2d");
+
+    const rawData = data.result;
+
+    const colors = [
+        "rgba(255, 99, 132)", // Red
+        "rgba(54, 162, 235)", // Blue
+        "rgba(255, 206, 86)", // Yellow
+        "rgba(75, 192, 192)", // Green
+        "rgba(153, 102, 255)", // Purple
+        "rgba(255, 159, 64)", // Orange
+        // Add more colors if you have more years
+    ];
+
+    const colorsAlpha = [
+        "rgba(255, 99, 132, 0.5)", // Red
+        "rgba(54, 162, 235, 0.5)", // Blue
+        "rgba(255, 206, 86, 0.5)", // Yellow
+        "rgba(75, 192, 192, 0.5)", // Green
+        "rgba(153, 102, 255, 0.5)", // Purple
+        "rgba(255, 159, 64, 0.5)", // Orange
+        // Add more colors if you have more years
+    ];
+
+    // Months labels
+    const monthLabels = [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+    ];
+
+    let dataByYear = {};
+
+    // Process rawData to fit into the data structure
+    rawData.forEach((item) => {
+        const year = item[2];
+        const month = item[3];
+        const value = item[6];
+
+        if (!dataByYear[year]) {
+            dataByYear[year] = Array(12).fill(null);
+        }
+        dataByYear[year][month - 1] = value; // Month index is zero-based
+    });
+
+    // Prepare datasets
+    const datasets = Object.keys(dataByYear).map((year, i) => {
+        return {
+            label: year,
+            data: dataByYear[year],
+            fill: true,
+            borderColor: colors[i % colors.length],
+            backgroundColor: colors[i % colors.length],
+            pointBackgroundColor: "#fff",
+            pointBorderColor: colorsAlpha[i % colorsAlpha.length],
+            tension: 0.4,
+            pointRadius: 3,
+            pointBorderWidth: 3,
+        };
+    });
+
+    // Chart initialization
+    // const ctx = document.getElementById('myChart').getContext('2d');
+    myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: monthLabels,
+            datasets: datasets,
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: "Month",
+                    },
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: "Accident Rate",
+                    },
+                },
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: "top",
+                },
+            },
+        },
+    });
+};
+
+const visualizeQuery2 = (data) => {};
+const visualizeQuery3 = (data) => {};
+const visualizeQuery4 = (data) => {};
+const visualizeQuery5 = (data) => {};
 
 // store the queries and their html string variant
 const queryManager = {
