@@ -61,6 +61,10 @@ Get your db credentials from: https://register.cise.ufl.edu/oracle/
 
 ## Run the Application 🚀
 
+Some shortcuts to build, run and open a browser's tab include:
+On Linux/macOS: ```./run.sh```
+On Windows: ```.\run.bat```
+
 1. To run it, open the directory and run:
 
 ```
@@ -80,7 +84,7 @@ docker-compose down
 4. When making changes, run:
 
 ```
-docker-compose up --build
+docker-compose up -d --build
 ```
 
 ## To Install Docker in Debian/Ubuntu Systems 🐧
