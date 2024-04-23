@@ -39,8 +39,11 @@ const querySubmitHandler = async (element) => {
     // display loading element
     showLoader(`queryLoader-${queryNumber}`);
 
-    console.log("input data", queryManager.getQueryString(queryNumber));
-
+    //console.log("input data", queryManager.getQueryString(queryNumber));
+    let textarea = "";
+    if (Number(queryNumber) == 6) {
+        textarea = document.getElementById("queryInput-6").value;
+    }
     try {
         // post to backend
         const response = await fetch("http://localhost:3000/data", {
@@ -49,7 +52,9 @@ const querySubmitHandler = async (element) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                data: queryManager.getQueryString(queryNumber),
+                data: textarea
+                    ? textarea
+                    : queryManager.getQueryString(queryNumber),
             }),
         });
 
@@ -64,6 +69,36 @@ const querySubmitHandler = async (element) => {
         // check for success results or error for bad query on our custom checks to prevent alter
         if (data.message === "success") {
             // add a li for each item to the ul
+
+            const li = document.createElement("li");
+            li.classList.add("list-item");
+            let textNode;
+            if (Number(queryNumber) == 1)
+                textNode = document.createTextNode(
+                    "State,City,Year,Month,Severity_Avg,Detail_Count"
+                );
+            else if (Number(queryNumber) == 2)
+                textNode = document.createTextNode(
+                    "State,Date,2020_Num_Trips,%Pop_At_Home,2019_Num_Trips"
+                );
+            else if (Number(queryNumber) == 3)
+                textNode = document.createTextNode(
+                    "State,Month,Year,Unemployment_Rate,Accident_Rate"
+                );
+            else if (Number(queryNumber) == 4)
+                textNode = document.createTextNode(
+                    "Region,Month,Year,CPI,Accident_Rate"
+                );
+            else if (Number(queryNumber) == 5)
+                textNode = document.createTextNode(
+                    "State,Year,% Acceptable_Miles,Accident_Rate"
+                );
+
+            if (Number(queryNumber) < 6) {
+                li.appendChild(textNode);
+                ul.appendChild(li);
+            }
+
             data.result.forEach((item) => {
                 const li = document.createElement("li");
                 li.classList.add("list-item");
@@ -722,27 +757,36 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         querySubmitHandler(e.target);
         const info = document.getElementById("modal1-visual-info");
-        const city = document.getElementById("states-1").value || null;
-        const state = document.getElementById("states-1").value || null;
-        if (city && state) info.innerHTML = `State: ${state}, City: ${city}`;
+        const city = document.getElementById("city-1").value || null;
+        const state = document.getElementById("states-1");
+        const selectedState = state.options[state.selectedIndex].textContent;
+
+        if (city && state)
+            info.innerHTML = `State: ${selectedState}, City: ${city}`;
     });
 
     document.getElementById("dataForm-2").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
         const info = document.getElementById("modal2-visual-info");
-        const state = document.getElementById("states-2").value || null;
-        const month = document.getElementById("months-2").value || null;
-        if (state && month) info.innerHTML = `State: ${state}, Month: ${month}`;
+        const state = document.getElementById("states-2") || null;
+        const selectedState = state.options[state.selectedIndex].textContent;
+        const month = document.getElementById("months-2") || null;
+        const selectedMonth = month.options[month.selectedIndex].textContent;
+        if (state && month) {
+            info.innerHTML = `State: ${selectedState}, Month: ${selectedMonth}`;
+        }
     });
 
     document.getElementById("dataForm-3").addEventListener("submit", (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
         const info = document.getElementById("modal3-visual-info");
-        const state = document.getElementById("states-3").value || null;
+        const state = document.getElementById("states-3") || null;
+        const selectedState = state.options[state.selectedIndex].textContent;
         const rate = document.getElementById("rate-3").value || null;
-        if (state && rate) info.innerHTML = `State: ${state}, Rate: ${rate}`;
+        if (state && rate)
+            info.innerHTML = `State: ${selectedState}, Rate: ${rate}`;
     });
 
     document.getElementById("dataForm-4").addEventListener("submit", (e) => {
@@ -754,7 +798,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (selectedRegion) info.innerHTML = `Region: ${selectedRegion}`;
     });
 
-    document.getElementById("dataForm-5").addEventListener("submit", (e) => {
+    const handleQ5Change = (e) => {
         e.preventDefault();
         querySubmitHandler(e.target);
         const info = document.getElementById("modal5-visual-info");
@@ -764,11 +808,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedState2 = state2.options[state2.selectedIndex].textContent;
         if (state1 && state2)
             info.innerHTML = `State 1: ${selectedState1}, State 2: ${selectedState2}`;
+    };
+    document.getElementById("dataForm-5").addEventListener("submit", (e) => {
+        e.preventDefault();
+        handleQ5Change(e);
+    });
+
+    document.getElementById("dataForm-6").addEventListener("submit", (e) => {
+        e.preventDefault();
+        querySubmitHandler(e.target);
     });
 
     // event listeners for query 1
     document.getElementById("states-1").addEventListener("change", (e) => {
-        const city = document.getElementById("states-1").value;
+        const city = document.getElementById("city-1").value;
         if (city) {
             queryManager.setQuery(1, e.target.value, city);
             document.getElementById("queryInput-1").innerHTML =
@@ -787,10 +840,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // event listeners for query 2
     document.getElementById("states-2").addEventListener("change", (e) => {
+        console.log("firing submit on df 2");
         const month = document.getElementById("months-2").value || 3;
         queryManager.setQuery(2, e.target.value, Number(month));
         document.getElementById("queryInput-2").innerHTML =
             queryManager.getQueryHTML(2);
+
+        /*  document.getElementById("dataForm-2").submit((e) => {
+            e.preventDefault();
+            handleQ1Change(e);
+        }); */
     });
 
     document.getElementById("months-2").addEventListener("change", (e) => {
@@ -798,6 +857,10 @@ document.addEventListener("DOMContentLoaded", () => {
         queryManager.setQuery(2, state, Number(e.target.value));
         document.getElementById("queryInput-2").innerHTML =
             queryManager.getQueryHTML(2);
+        /*   document.getElementById("dataForm-2").submit((e) => {
+            e.preventDefault();
+            handleQ1Change(e);
+        }); */
     });
 
     // event listeners for query 3

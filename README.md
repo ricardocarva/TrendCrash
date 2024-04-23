@@ -109,3 +109,14 @@ docker-compose --version
 ```
 
 # Happy data exploring! 🧐📈
+
+## Images
+
+### Query 1 Results
+![](readmeImages/query1.png)
+
+### Query 1 Graph
+![](readmeImages/query1graph.png)
+
+### Query 4 Graph
+![](readmeImages/query4graph.png)
